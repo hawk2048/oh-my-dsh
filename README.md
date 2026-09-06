@@ -116,6 +116,9 @@ oh-my-dsh/
 ```sh
 # git 源码安装（纯 JS/Markdown，零构建，无需 allowBuilds 授权；用 @<tag> 可锁定版本）
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
+
+# 或从 npm 安装（等价 OMC 的 npm i -g）
+dsh plugin --profile web add @hawk2048/oh-my-dsh
 ```
 
 装完重启 profile 即可。用户全程只敲一条命令，由 pnpm 拉取，**不手动下载压缩包**。

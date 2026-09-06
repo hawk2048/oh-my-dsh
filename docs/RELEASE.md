@@ -10,7 +10,7 @@ OMC 的安装只有两条路，**都不涉及「下载压缩包」**：
 | OMC | oh-my-dsh 等价 |
 |-----|---------------|
 | Claude Code 插件市场 `/plugin marketplace add <git-url>` + `/plugin install`（git clone） | `dsh plugin add github:hawk2048/oh-my-dsh`（git 拉取） |
-| `npm i -g oh-my-claude-sisyphus`（npm） | `dsh plugin add oh-my-dsh`（若发布到 npm） |
+| `npm i -g oh-my-claude-sisyphus`（npm） | `dsh plugin add @hawk2048/oh-my-dsh`（若发布到 npm） |
 
 所以 oh-my-dsh 也一样：**git tag 就是 release**，用户敲一条命令，由 pnpm 拉取，全程不碰压缩包。
 
@@ -31,7 +31,7 @@ pnpm pack
 dsh plugin --profile omdtest add ./oh-my-dsh-<version>.tgz
 dsh --profile omdtest --dump-config   # 应看到 command-omd 与 skill-filesystem(customSkillDirs)
 dsh --profile omdtest                 # 应能启动、无 duplicate / provider 冲突
-dsh plugin --profile omdtest remove oh-my-dsh
+dsh plugin --profile omdtest remove @hawk2048/oh-my-dsh
 ```
 
 ## 发布步骤
@@ -41,7 +41,7 @@ dsh plugin --profile omdtest remove oh-my-dsh
    git tag v0.1.0
    git push origin v0.1.0
    ```
-2. （可选）发布到 npm：`pnpm publish` —— 等价 OMC 的 `npm i -g oh-my-claude-sisyphus`，装的是 `dsh plugin add oh-my-dsh`。
+2. （可选）发布到 npm：`pnpm publish` —— 等价 OMC 的 `npm i -g oh-my-claude-sisyphus`，装的是 `dsh plugin add @hawk2048/oh-my-dsh`。
 3. （可选）在 GitHub Release 挂 `pnpm pack` 出的 `.tgz`，仅供离线/内网分发；不是必需，也不是默认安装方式。
 
 ## 安装方式（写进 README 与 release 说明）
@@ -52,8 +52,8 @@ dsh plugin --profile omdtest remove oh-my-dsh
 # git 源码安装（等价 OMC 插件市场；纯 JS/Markdown，无需构建授权）
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
 
-# npm 安装（等价 OMC 的 npm i -g；若已发布）
-dsh plugin --profile web add oh-my-dsh
+# npm 安装（等价 OMC 的 npm i -g）
+dsh plugin --profile web add @hawk2048/oh-my-dsh
 ```
 
 装完后重启 profile，`/omd-*` 命令与 29 个 skill 即全局可用。
@@ -77,4 +77,4 @@ dsh plugin --profile web add oh-my-dsh
 ## 注意事项
 
 - git 安装拉取源码，本仓库是纯 JS + YAML + Markdown、零构建，故不需要 `prepare` 脚本，用户也无需 `allowBuilds` 授权。
-- 若改为发布 npm，在 CI 里 `pnpm pack` 出产物再 `pnpm publish`（或用 `dsh plugin add oh-my-dsh` 直接装 npm 包）。
+- 若改为发布 npm，在 CI 里 `pnpm pack` 出产物再 `pnpm publish`（或用 `dsh plugin add @hawk2048/oh-my-dsh` 直接装 npm 包）。

@@ -11,7 +11,7 @@
 #   the default roots, so project and user skills keep working alongside omd's.
 - insert:
     - id: command-omd
-      name: 'oh-my-dsh/commands'
+      name: '@hawk2048/oh-my-dsh/commands'
 
 - id: skill-filesystem
   disabled: false
