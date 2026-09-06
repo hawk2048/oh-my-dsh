@@ -32,15 +32,16 @@ Restart the profile, type `/omd` to see command candidates, or use natural langu
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh` CLI)
 - [pnpm](https://pnpm.io) — `dsh plugin` forwards to pnpm
 
-## Features
+## Why oh-my-dsh
 
-- **Native multi-agent orchestration** — the Plan→Execute→Review→Verify pipeline, Team, Autopilot, Ralph, and more, mapped onto DSH's `workflow` / `subagent` / `ralph` / `goal` primitives.
-- **One-command install** — ships as a `dsh.bundle`; no build step, no setup wizard.
-- **Natural-language triggering** — describe what you want; the matching `omd-*` skill loads automatically.
-- **12 slash commands** — `/omd-plan` … `/omd-ultragoal` for explicit entry.
-- **29 reusable skills** — orchestration modes, prompt-trigger disciplines (tdd / deepsearch / deep-analyze / ultrathink), and utilities (debug / release / remember / doctor / …).
-- **Inline HUD** — live `dsh-ui` progress dashboards (stat / progress / table / timeline) rendered inside the reply.
-- **Two distribution forms** — bundle (global skills + commands) or agent preset (per-session persona).
+- **Zero configuration** — one `dsh plugin add` installs everything; the bundle self-registers, no setup wizard.
+- **Team-first orchestration** — Team is the canonical staged pipeline (`team-plan → team-prd → team-exec → team-verify → team-fix`), built on DSH's native `workflow`.
+- **Natural language interface** — describe what you want; the 29 `omd-*` skills auto-load, nothing to memorize.
+- **Automatic parallelization** — complex tasks fan out across parallel `subagent`s.
+- **Persistent execution** — Ralph / Autopilot / Ultragoal keep going until verified complete (native `ralph` loops + `goal` cross-turn objectives).
+- **Zero runtime overhead** — adds no new host tools or runtime, just skills over DSH's native primitives, so you keep DSH's own model routing and sandbox.
+- **Learn from experience** — `omd-skillify` extracts reusable skills; `omd-remember` persists durable notes across sessions.
+- **Real-time visibility** — the inline HUD renders live `dsh-ui` progress dashboards.
 
 ## OMC correspondence
 

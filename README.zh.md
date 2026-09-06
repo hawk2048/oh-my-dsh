@@ -32,15 +32,16 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh` CLI）
 - [pnpm](https://pnpm.io)（`dsh plugin` 底层转发给 pnpm）
 
-## 特性
+## 为什么用 oh-my-dsh
 
-- **原生多智能体编排**——Plan→Execute→Review→Verify 流水线、Team、Autopilot、Ralph 等，映射到 DSH 的 `workflow`/`subagent`/`ralph`/`goal` 原语。
-- **一条命令安装**——以 `dsh.bundle` 分发，零构建、无安装向导。
-- **自然语言触发**——说清需求，对应 `omd-*` skill 自动加载。
-- **12 条斜杠命令**——`/omd-plan` … `/omd-ultragoal` 显式入口。
-- **29 个可复用 skill**——编排模式 + 提示词触发纪律（tdd/deepsearch/deep-analyze/ultrathink）+ 工具（debug/release/remember/doctor/…）。
-- **内联 HUD**——回答正文里的 `dsh-ui` 实时进度仪表盘（stat/progress/table/timeline）。
-- **双形态分发**——bundle（全局命令 + skill）或 agent preset（按会话 persona）。
+- **零配置**——一条 `dsh plugin add` 装好全部；bundle 自注册，无需安装向导。
+- **Team 优先编排**——Team 是标准分阶段流水线（`team-plan → team-prd → team-exec → team-verify → team-fix`），构建在 DSH 原生 `workflow` 上。
+- **自然语言交互**——说清需求即可，29 个 `omd-*` skill 自动加载，无需记命令。
+- **自动并行**——复杂任务扇出到并行 `subagent`。
+- **持久执行**——Ralph / Autopilot / Ultragoal 不达验证完成不罢休（原生 `ralph` 循环 + `goal` 跨轮目标）。
+- **零运行时开销**——不引入新宿主工具或运行时，只是 DSH 原生原语之上的 skill，保留 DSH 自己的模型路由与沙箱。
+- **从经验中学习**——`omd-skillify` 提取可复用 skill；`omd-remember` 跨会话持久记忆。
+- **实时可见**——内联 HUD 渲染实时 `dsh-ui` 进度仪表盘。
 
 ## 与 oh-my-claudecode 的对应关系
 
