@@ -1,0 +1,45 @@
+---
+name: omd-ralplan
+description: "Ralplan: consensus planning — fan out several independent planner subagents from different angles, then run structured deliberation that adjudicates disagreements into one consensus plan. Use for high-risk or ambiguous features that need multi-perspective planning, or when the user says ralplan/共识规划/多方论证/审慎规划."
+---
+
+# oh-my-dsh · Ralplan 共识规划
+
+和 `plan` 一样产计划，但**多视角 + 结构化审议**：不让单一视角拍板，而是让多个独立规划子代理从不同角度出草案，再由仲裁子代理逐条裁决分歧，收敛成一份共识计划。对应 OMC 的 `ralplan`。
+
+## 何时用
+
+- 高风险、影响面大、或需求本身有争议的任务。
+- 用户说"ralplan""共识规划""多方论证""审慎规划""想清楚再定"。
+- 单一视角容易漏掉的：架构选型、数据迁移、安全边界、破坏性重构。
+
+## 三步收敛
+
+```
+并行规划草案（多视角） → 分歧识别与仲裁 → 合并成共识计划（必要时再迭代）
+```
+
+1. **并行草案**：派多个规划子代理（视角不同：架构 / 数据 / 安全 / 测试 / 迁移风险），各自独立产出带验收标准的计划草案，不许互相看结果。
+2. **仲裁**：派一个仲裁子代理读全部草案，列出**分歧点**，逐条裁决（选 A / 选 B / 折中），并给裁决理由。
+3. **合并**：把裁决后的方案合并成一份共识计划，附「分歧记录」：哪些已裁决、哪些仍未决。高风险时再迭代一轮（等同 `--deliberate`）。
+
+## 产出
+
+- 共识计划（任务分解 + 依赖 + 验收标准）；
+- 分歧记录表：分歧点 / 各方立场 / 裁决 / 理由，未决项显式列出，不许模糊掉。
+
+## 与其它模式的关系
+
+- `plan` = 单一规划者快速出计划；`ralplan` = 多视角 + 审议，更重、用于高风险。
+- 需求本身还没问清，先 `deep-interview`，再 `ralplan`。
+- `ralplan` 产出共识计划后，交给 `execute` → `review` → `verify`。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出：草案数 + 分歧数（已裁决/未决）+ 共识计划概览表。让"不同意见在哪、怎么裁的"可见。
+
+## 反模式
+
+- 别只用单一视角假装"共识"——至少 2–3 个独立视角。
+- 别把分歧静默合并掉——每个分歧要么裁决、要么显式标记未决。
+- 别无限迭代审议——设轮次上限，未决项按"影响面"排序取舍。

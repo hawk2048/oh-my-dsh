@@ -1,0 +1,41 @@
+---
+name: omd-execute
+description: "Execute: implement an agreed plan — route multi-file changes/refactors/debugging to executor subagents (background parallel), work directly on trivial edits, track with todo_write. Use as the implementation stage of plan→execute→review→verify, or when the user asks to execute/实现/开发/动手/开始写."
+---
+
+# oh-my-dsh · Execute 执行
+
+按已确认的计划把代码写出来。对应 OMC 的 `execute` 工作流（Tier-0 流水线第二段：`plan → execute → review → verify`）。
+
+## 何时用
+
+- 计划已经清楚（自己刚 `plan` 过，或用户给了明确指令）。
+- 用户说"执行""实现""开发""开始写""动手"。
+
+## 委托 vs 直接
+
+- **委托（`subagent`）**：多文件改动、重构、调试、跨模块联动、需要独立上下文的工作。默认后台并行启动多个，不要一个接一个串行等。
+- **直接做**：琐碎改动、单条命令、单文件小修。不要把上下文烧在能秒改的事上。
+
+委托时给子代理**完整自足的任务**：目标 + 相关文件路径 + 验收标准 + 既有模式，它看不到本会话，所以关键上下文要写进 prompt。
+
+## 并行纪律
+
+- 2 个以上互不依赖的改动，用 `subagent` 在同一轮**并行扇出**（后台回传，别 busy-poll）。
+- 用 `todo_write` 跟踪：每个实现步骤一条，并行步骤可同时 `in_progress`，完成即置 `completed`。
+- 复杂实现交给 `executor` 子代理；需要更深分析时显式指定更强的模型档位。
+
+## 与其它阶段的关系
+
+- 写完**不等于完成**：`execute` 之后必须过 `review`（独立评审）再 `verify`（验证）。
+- 别在 `execute` 里自我评审——评审是下一段独立的事。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出执行进度：todo 进度条 + 子代理状态表（每个并行子代理一行）。让"哪些在跑、哪些已完成"始终可见。
+
+## 反模式
+
+- 别把所有事都塞进主控上下文——能委托就委托。
+- 别在单轮里硬塞完整实现，也别静默留下半成品分支。
+- 别跳过 `review`/`verify` 就宣布完成。

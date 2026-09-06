@@ -1,0 +1,36 @@
+---
+name: omd-visual-verdict
+description: "Visual-verdict: compare a screenshot or rendered output against a reference and give a structured pass/fail verdict with specific deltas. Use when the user says visual-verdict / 对比截图 / 看下 UI 对不对 / 视觉检查 / 对比这两张图."
+---
+
+# oh-my-dsh · Visual-verdict 视觉 QA
+
+对比渲染产物与参考图，给出**结构化、可执行**的通过/不通过判定。对应 OMC 的 `visual-verdict` skill。
+
+## 何时用
+
+- 有截图/渲染图要跟设计稿或参考图对比。
+- 用户要「UI 哪里不对」「视觉走查」的结论。
+
+## 判定纪律
+
+1. **读图**：用 `read_image` 读待检图与参考图，逐张看。
+2. **逐维度对比**：布局、颜色、字体字号、间距、文本内容、对齐、溢出——每项单独判。
+3. **给具体差异**：不通过项写清「在哪、期望 vs 实际」，能定位到元素就定位。
+4. **出判定**：汇总成 `pass` / `fail`（或 `partial`），并给可执行修复项。
+
+## 与其它模式的关系
+
+- 发现视觉缺陷后，转 `omd-debug` 定位代码、`omd-execute` 修。
+- 有设计稿/参考文档时先用 `omd-external-context` 把参考吃进来再比。
+- 修完再跑一遍本判定，形成闭环。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出判定：`table`（维度/期望/实际/通过?）+ `stat`（通过/失败计数）+ `callout`（总体判定）。让「哪里不对、差多少」一眼可见。
+
+## 反模式
+
+- 别只看一眼就给「差不多」，逐维度核对。
+- 别给「颜色有点不一样」这种模糊结论——说清具体差在哪。
+- 别把「无法判断」伪装成 pass；拿不准就标 partial 并说明原因。

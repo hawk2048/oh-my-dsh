@@ -1,0 +1,20 @@
+# oh-my-dsh bundle patch: the composition layer this bundle contributes when a
+# profile lists it. `dsh plugin add` appends this layer after @deepseek-ai/dsh-base
+# and before the user's own overrides.
+#
+# - command-omd (insert) registers the 12 /omd-* slash commands into the host
+#   `commands` registry, so every session in the profile sees them.
+# - skill-filesystem (override by id) adds this package's `skills/` to the base
+#   host skill-filesystem via customSkillDirs and re-enables the row (the Web app
+#   ships the base row disabled because presets own local discovery). Overriding
+#   by id keeps a single "filesystem" provider; customSkillDirs is additive over
+#   the default roots, so project and user skills keep working alongside omd's.
+- insert:
+    - id: command-omd
+      name: 'oh-my-dsh/commands'
+
+- id: skill-filesystem
+  disabled: false
+  config:
+    customSkillDirs:
+      - !!js "process.getBuiltinModule('node:url').fileURLToPath(new URL('skills/', baseUrl))"

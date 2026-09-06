@@ -1,0 +1,45 @@
+---
+name: omd-autoresearch
+description: "Autoresearch: a bounded evaluator-driven improvement loop — produce a version, an evaluator subagent scores it against the target criteria, then improve, repeat until it meets the bar or the round cap. Use when the user asks to autoresearch/自动调研改进/边做边评/持续打磨到达标."
+---
+
+# oh-my-dsh · Autoresearch 评估器驱动的改进循环
+
+不是单趟调研，而是**「产出 → 评估打分 → 按差距改进 → 再评估」的有界循环**，直到达标或达到轮次上限。对应 OMC 的 `autoresearch`。
+
+## 何时用
+
+- 产出物有明确的"达标标准"，但第一版通常不够好，需要迭代打磨（调研报告、设计文档、方案对比）。
+- 用户说"autoresearch""自动调研改进""边做边评""持续打磨""做到达标为止"。
+
+## 有界循环
+
+```
+create_goal(达标目标) → 产出当前版 → 评估子代理打分/找差距 → 按差距改进 → 再评估 → 达标或达上限即停
+```
+
+1. **定达标标准**：`create_goal` 写一个可验收的 objective（"有 3 个以上来源、覆盖性能与安全两个维度、无未决存疑项的报告"优于"好好调研一下"）。
+2. **产出当前版**：先出一版（可并行 `subagent` 分工）。
+3. **评估**：派评估子代理**独立**对照达标标准打分，返回「差距清单」（哪里不达标、差在哪、怎么改），只允许"达标 / 具体差距"，不允许"差不多"。
+4. **改进**：按差距清单修，回到第 3 步。
+5. **有界退出**：达标 → `update_goal complete`；达到轮次上限仍未达标 → 显式报告剩余差距，别装作完成。
+
+## 状态与可恢复
+
+- 用 goal 工具承载循环状态，跨轮持续。
+- 每轮把「当前版 + 评估结论」写进工作区文件（如 `AUTORESEARCH.md`），保证会话恢复后能接着改。
+
+## 与其它模式的关系
+
+- `research` = 单趟查证；`autoresearch` = research + 评估循环，目标是"持续改进到达标"。
+- 评估是**独立评估**，别让产出代理自我打分。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出：轮次 + 评分趋势 + 差距清单（未达标项）。让"离达标还差什么"始终可见。
+
+## 反模式
+
+- 别无界循环——必须有轮次上限 + 明确的达标退出条件。
+- 别把"评估分数"当最终结论——评估也是证据之一，最后仍要独立核验。
+- 别把评估做模糊（"还行"）——要具体到差距项。

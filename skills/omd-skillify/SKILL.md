@@ -1,0 +1,36 @@
+---
+name: omd-skillify
+description: "Skillify: extract a repeatable workflow from the current session into a new reusable SKILL.md. Use when the user says skillify / 把这段流程存成 skill / 沉淀成技能 / 做成可复用 / 记住这套做法."
+---
+
+# oh-my-dsh · Skillify 从会话提取 skill
+
+把本会话里跑通的一套流程，沉淀成可复用的 `SKILL.md`。对应 OMC 的 `skillify` 工具 skill。
+
+## 何时用
+
+- 一套多步流程被反复用到，值得固化成 skill。
+- 用户说「把刚才这套做法存下来，下次直接调」。
+
+## 提取纪律
+
+1. **识别可复用步骤**：从会话里挑出「稳定、可重复、有明确触发场景」的那部分（别把一次性细节也固化）。
+2. **写 frontmatter**：`name`（kebab-case）+ `description`（含触发词：中文 + 英文，说清「何时用」）。
+3. **写正文**：按「何时用 / 纪律 / 与其它模式关系 / 收尾 HUD / 反模式」结构，写**怎么做**而非「当时做了什么」。
+4. **落位**：写进 `skills/omd-<name>/SKILL.md`，与现有 skill 命名、风格一致。
+5. **验证**：确认 frontmatter 合法、触发词能命中、正文能被独立执行（不依赖本会话上下文）。
+
+## 与其它模式的关系
+
+- 提取的是「可复用流程」，用 `omd-wiki` 记「知识」，用 `omd-remember` 记「单条事实」——三者别混。
+- 提取后可在 README 的对应表补一行，保持文档同步。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出提取结果：`keyvalue`（新 skill 名/路径）+ `table`（提取的步骤/触发词）。让「沉淀了什么、怎么触发」一眼可见。
+
+## 反模式
+
+- 别把一次性任务细节固化成 skill——只留真正可复用的。
+- 别让新 skill 依赖本会话的临时上下文，必须独立可执行。
+- 别写「当时我做了什么」的流水账，要写「以后该怎么做」。

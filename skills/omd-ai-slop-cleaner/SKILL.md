@@ -1,0 +1,43 @@
+---
+name: omd-ai-slop-cleaner
+description: "AI-slop-cleaner: strip AI-generated filler, boilerplate, redundant comments, and vague prose from code or text. Use when the user says ai-slop / 去废话 / 精简 / 去水 / 太啰嗦 / 去AI味, or wants output tightened."
+---
+
+# oh-my-dsh · AI-slop-cleaner 去废话
+
+删除 AI 生成的冗余、套话、废话注释与空洞措辞，让代码/文本**精炼、具体、像人写的**。对应 OMC 的 `ai-slop-cleaner` 提示词触发模式（其内部转 `review`）。
+
+## 何时用
+
+- 用户嫌输出啰嗦、有「AI 味」、要精简。
+- 清理冗余注释、无意义样板、`In conclusion` 式套话。
+
+## 清理纪律
+
+识别并移除这些典型 slop：
+
+| 类型 | 例子 | 处理 |
+|------|------|------|
+| 复述注释 | `// set x to 1` 紧跟 `x = 1` | 删注释，代码自明 |
+| 废话样板 | "In today's fast-paced world…" | 整段删 |
+| 空洞形容词 | "robust, scalable, cutting-edge" | 换成具体事实 |
+| 冗余总结 | 结尾把上文再讲一遍 | 删，留结论 |
+| 无意义占位 | TODO 永不实现、`pass` 式填充 | 删或落实 |
+
+原则：**保留含义，删掉水分**。改完让输出更短、更具体，但不丢信息。
+
+## 与其它模式的关系
+
+- 清理完交给 `omd-review` 复核，确认没误删语义。
+- 清理的是「写得啰嗦」，不是「逻辑有错」——后者走 `omd-debug` / `omd-review`。
+- 用于生成时，把它当 `omd-execute` 的输出后置滤网。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出清理对照：删除条目 + 前后字数 + 类型分布。让「删了什么、精简多少」一眼可见。
+
+## 反模式
+
+- 别为精简牺牲准确性或可读性。
+- 别把有信息量的注释当 slop 删掉（`为什么` 的注释要留）。
+- 别只删不改——该重写的句子要重写成具体措辞。

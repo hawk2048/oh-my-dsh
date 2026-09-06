@@ -1,0 +1,36 @@
+---
+name: omd-wiki
+description: "Wiki: maintain a lightweight markdown knowledge base in the workspace — create, update, and cross-link pages and keep them consistent with the code. Use when the user says wiki / 记到知识库 / 更新文档 / 维护文档 / 写进 wiki."
+---
+
+# oh-my-dsh · Wiki 知识库维护
+
+在**工作区内**维护一套轻量 markdown 知识库，让它与代码同步。对应 OMC 的 `wiki` 工具 skill。
+
+## 何时用
+
+- 用户要把知识/决策/架构沉淀成文档。
+- 已有 wiki/文档目录（如 `docs/`、`wiki/`）需要增改维护。
+
+## 维护纪律
+
+1. **约定位置**：确认知识库存哪（`docs/` 或专用目录），沿用既有结构与命名。
+2. **单页单一主题**：一页讲清一件事，页间用相对链接交叉引用。
+3. **与代码同步**：文档描述的行为/接口要在代码里核对（`grep`/`read`），别写陈旧的。
+4. **精炼**：写「决策 + 为什么 + 关键事实」，别堆过程流水账（配合 `omd-ai-slop-cleaner`）。
+
+## 与其它模式的关系
+
+- `wiki` 存「成体系知识」，`omd-remember` 存「单条跨会话事实」，`omd-skillify` 存「可复用流程」。
+- 文档要反映设计时，先用 `omd-deep-analyze` 把架构吃透再写。
+- 发布前用 `omd-release` 核对文档是否随版本更新。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出文档变更：`table`（页面/新增或更新/要点）+ `keyvalue`（知识库路径）。让「改了哪些页、内容是什么」一眼可见。
+
+## 反模式
+
+- 别把文档写得和代码脱节——写完核对一遍。
+- 别一页塞十个主题，拆开并交叉链接。
+- 别重复已有内容，先 `read` 现有页面再增补。

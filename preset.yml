@@ -1,0 +1,2 @@
+name: oh-my-dsh 编排
+description: 多智能体编排层：核心流水线 Plan→Execute→Review→Verify，加 Team/Autopilot/Ralph/Deep-Interview/Ralplan/Research/Autoresearch/Ultragoal 与 HUD；另含提示词触发纪律（tdd、deepsearch、deep-analyze、ultrathink、ai-slop-cleaner）与工具 skill（doctor、debug、release、remember、cancel、minimal-code-discipline、external-context、visual-verdict、skillify、wiki、help）。29 个 skill + 12 条 /omd-* 斜杠命令，全部封装在 DSH 原生 workflow/subagent/ralph/goal 工具之上。

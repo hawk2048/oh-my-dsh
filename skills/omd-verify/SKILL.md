@@ -1,0 +1,44 @@
+---
+name: omd-verify
+description: "Verify: verify before claiming completion — run tests/build, check against acceptance criteria, collect evidence, size the verifier (small inline, large/security via subagent), and iterate on failure. Use as the final stage of plan→execute→review→verify, or when the user asks to verify/验证/测试/检查/跑通."
+---
+
+# oh-my-dsh · Verify 验证
+
+在宣布"完成"之前，**拿出证据**证明它真的符合验收标准。对应 OMC 的 `verify` 工作流（Tier-0 流水线末段：`plan → execute → review → verify`）。
+
+## 何时用
+
+- `execute`/`review` 之后，需要证明"真跑通了、真达标了"。
+- 用户说"验证""测试""检查""跑一遍确认"。
+
+## 验证动作
+
+- **跑测试/构建**：用 `pwsh`（Windows）或 `bash` 执行测试、lint、构建命令；`run_in_background: true` 跑长任务，用 `job_output` 收结果。
+- **对照验收标准**：回到 `plan` 阶段写下的验收标准，逐条核，只允许"通过"或"具体失败"，不允许"应该没问题"。
+- **收集证据**：测试输出、命令退出码、产物文件——把这些作为"已完成"的依据写进回答。
+
+## 按规模选验证者
+
+- **小改动**：直接内联验证（自己跑命令、看输出）。
+- **标准改动**：跑测试 + 对照验收标准。
+- **大/安全敏感改动**：派 `subagent` 验证代理，独立复核，别只信自己一眼。
+
+## 失败则迭代
+
+验证失败不是结束——把失败项回给 `execute`（修）→ `review`（评）→ `verify`（再验），循环直到全绿。这才是 `plan → execute → review → verify` 闭环的意义。
+
+## 与其它阶段的关系
+
+- `verify` 是"证据层"，`review` 是"质量层"；缺一不可。
+- 别把"测试全绿"当唯一标准——还要对照验收标准和真实产物。
+
+## 收尾：HUD
+
+用 `omd-hud` 输出验证结果：验收标准表（逐条通过/失败）+ 测试命令与结果。让"哪些验收过了、哪些还红着"一眼可见。
+
+## 反模式
+
+- 别在没跑测试、没证据时宣布"完成"。
+- 别把 `test.skip`/`.only`、TODO 占位当通过。
+- 验证失败别沉默绕过——要么修，要么把阻塞显式报告出来。

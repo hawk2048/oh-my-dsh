@@ -1,0 +1,37 @@
+---
+name: omd-tdd
+description: "TDD (test-driven development): write the failing test first, then the minimal implementation, then refactor (red-green-refactor). Use when the user says tdd / 测试驱动 / 先写测试 / red-green / 红绿重构, or wants tests to drive development."
+---
+
+# oh-my-dsh · TDD 测试驱动开发
+
+严格按 **red → green → refactor** 循环驱动实现：先有失败测试，再有最小实现，最后重构。对应 OMC 的 `tdd` 提示词触发模式。
+
+## 何时用
+
+- 用户明确要 TDD、`tdd`、先写测试、红绿重构。
+- 功能有清晰的可验证行为（输入→输出），适合先定测试。
+
+## 循环纪律
+
+1. **Red（红）**：先写一个**会失败**的测试，用它能跑的真实命令（`pwsh`/`bash` 的测试命令，或项目既有测试框架）。
+2. **Green（绿）**：写**最小**实现让测试通过，不做多余设计。
+3. **Refactor（重构）**：测试全绿后再清理重复、改善命名与结构，保持全绿。
+
+用 `todo_write` 跟踪「当前用例 → 红灯 → 绿灯 → 重构」这条链；每个用例走完一轮再进下一个。
+
+## 与其它模式的关系
+
+- 已有一份 `omd-plan` 方案时，按方案里的验收标准逐条写测试（测试即验收标准的可执行化）。
+- TDD 是 `omd-execute` 的一种实现纪律：实现由测试驱动，而不是写完再补测试。
+- 卡住时让 `omd-deep-analyze` 分析「为什么这个测试过不了」，再回来实现。
+
+## 收尾：HUD
+
+用 `omd-hud` 汇报红绿状态：当前用例、测试数（通过/失败）、覆盖到的验收点。让「哪些已验证、哪些还红着」一眼可见。
+
+## 反模式
+
+- 别先写实现再补测试——那是「补测」，不是 TDD。
+- 别跳过红灯直接进入实现：先确认测试真的失败，证明它有效。
+- 别在红灯时重构：先让测试绿，再谈整洁。
