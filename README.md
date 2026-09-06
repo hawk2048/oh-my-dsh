@@ -4,6 +4,16 @@
 
 > 两种触发方式：**自然语言**（29 个随 preset 打包的编排 skill，代理自动加载）+ **斜杠命令**（12 条，敲 `/omd` 即弹出候选）。启动一次会话，编排能力就位。
 
+## 快速开始
+
+一条命令装好全部 29 个 skill + 12 条 `/omd-*` 命令（等价 OMC 的插件市场安装）：
+
+```sh
+dsh plugin --profile web add github:hawk2048/oh-my-dsh
+```
+
+装完重启 profile，敲 `/omd` 弹出命令候选；或直接用自然语言（「先规划一下」「autopilot 搭个 API」）触发对应 skill。完整说明见下方[安装 / 使用](#安装--使用)。
+
 ## 与 oh-my-claudecode 的对应关系
 
 对齐 OMC **v5.3.0** 的命令面（核心流水线 `plan → execute → review → verify` + 保留模式）：
