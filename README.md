@@ -109,16 +109,13 @@ oh-my-dsh/
 
 ## 安装 / 使用
 
-两种安装方式，可单独用也可叠加。
+两种安装方式，**任选其一即可**（bundle 装全局、preset 按会话选）。
 
 **方式 A：组合包 bundle（主要，等价 OMC 的插件市场安装）** —— 全局装好 `/omd-*` 命令与 29 个 skill，profile 里所有会话可见：
 
 ```sh
 # git 源码安装（纯 JS/Markdown，零构建，无需 allowBuilds 授权；用 @<tag> 可锁定版本）
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
-
-# 或从 npm 安装（等价 OMC 的 npm i -g；若已发布）
-dsh plugin --profile web add oh-my-dsh
 ```
 
 装完重启 profile 即可。用户全程只敲一条命令，由 pnpm 拉取，**不手动下载压缩包**。

@@ -17,7 +17,7 @@ description: "Doctor: self-check the oh-my-dsh install — verify the skills dir
 
 按顺序查，每项给「OK / 异常 + 证据」：
 
-1. **skill 目录**：确认 `skills/` 下有一整套 `omd-*` 目录（28+ 个：编排 + 触发 + 工具 + HUD）。可用 `glob` 列 `skills/*/SKILL.md`。
+1. **skill 目录**：确认 `skills/` 下有一整套 `omd-*` 目录（29+ 个：编排 + 触发 + 工具 + HUD）。可用 `glob` 列 `skills/*/SKILL.md`。
 2. **斜杠命令**：确认命令面有 12 条 `/omd-*`（bundle 装进 `commands` 注册表，preset 经 `commands/omd-commands.mjs`）。让用户在输入框敲 `/omd` 看候选是否弹出。
 3. **挂载/组合**：preset 形态看 `~/.dsh/.agent-presets/oh-my-dsh/` 是否有 `agent.cordis.yml` + `skills/` + `commands/`；bundle 形态看 `dsh --profile <name> --dump-config` 是否有 `command-omd` 与 `skill-filesystem(customSkillDirs)` 行。
 4. **生效范围**：bundle = 全局；preset = 仅所选会话。若只装了 preset，换别的 preset 会话自然看不到 `/omd-*`。
