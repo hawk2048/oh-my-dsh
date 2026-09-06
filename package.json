@@ -30,6 +30,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hawk2048/oh-my-dsh"
+    "url": "git+https://github.com/hawk2048/oh-my-dsh.git"
   }
 }
