@@ -1,77 +1,105 @@
 # oh-my-dsh
 
-**面向 DeepSeek Harness (DSH) 的多智能体编排层** —— 把 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) 的编排模式，映射到 DSH 原生原语（`workflow` / `subagent` / `ralph` / `goal`）之上。
+[![npm version](https://img.shields.io/npm/v/@hawk2048/oh-my-dsh?color=cb3837)](https://www.npmjs.com/package/@hawk2048/oh-my-dsh)
+[![GitHub stars](https://img.shields.io/github/stars/hawk2048/oh-my-dsh?style=flat&color=yellow)](https://github.com/hawk2048/oh-my-dsh/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![dsh-plugin](https://img.shields.io/badge/dsh-plugin-orange)](https://github.com/topics/dsh-plugin)
 
-> 两种触发方式：**自然语言**（29 个随 preset 打包的编排 skill，代理自动加载）+ **斜杠命令**（12 条，敲 `/omd` 即弹出候选）。启动一次会话，编排能力就位。
+**A multi-agent orchestration layer for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH)** — ports [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)'s orchestration modes onto DSH's native primitives (`workflow` / `subagent` / `ralph` / `goal`).
 
-## 快速开始
+> Two ways to trigger: **natural language** (29 skills, auto-loaded by the agent) + **slash commands** (12 `/omd-*` commands). Start a session, orchestration is ready.
 
-一条命令装好全部 29 个 skill + 12 条 `/omd-*` 命令（等价 OMC 的插件市场安装）：
+[中文](README.zh.md)
+
+## Quick Start
+
+One command installs all 29 skills + 12 `/omd-*` commands (the OMC plugin-marketplace equivalent):
 
 ```sh
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
 ```
 
-装完重启 profile，敲 `/omd` 弹出命令候选；或直接用自然语言（「先规划一下」「autopilot 搭个 API」）触发对应 skill。完整说明见下方[安装 / 使用](#安装--使用)。
+Or from npm (the `npm i -g` equivalent):
 
-## 与 oh-my-claudecode 的对应关系
+```sh
+dsh plugin --profile web add @hawk2048/oh-my-dsh
+```
 
-对齐 OMC **v5.3.0** 的命令面（核心流水线 `plan → execute → review → verify` + 保留模式）：
+Restart the profile, type `/omd` to see command candidates, or use natural language ("plan this", "autopilot, build a REST API").
 
-| OMC 工作流 | oh-my-dsh skill | DSH 原生载体 |
+## Requirements
+
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh` CLI)
+- [pnpm](https://pnpm.io) — `dsh plugin` forwards to pnpm
+
+## Features
+
+- **Native multi-agent orchestration** — the Plan→Execute→Review→Verify pipeline, Team, Autopilot, Ralph, and more, mapped onto DSH's `workflow` / `subagent` / `ralph` / `goal` primitives.
+- **One-command install** — ships as a `dsh.bundle`; no build step, no setup wizard.
+- **Natural-language triggering** — describe what you want; the matching `omd-*` skill loads automatically.
+- **12 slash commands** — `/omd-plan` … `/omd-ultragoal` for explicit entry.
+- **29 reusable skills** — orchestration modes, prompt-trigger disciplines (tdd / deepsearch / deep-analyze / ultrathink), and utilities (debug / release / remember / doctor / …).
+- **Inline HUD** — live `dsh-ui` progress dashboards (stat / progress / table / timeline) rendered inside the reply.
+- **Two distribution forms** — bundle (global skills + commands) or agent preset (per-session persona).
+
+## OMC correspondence
+
+Aligned to OMC **v5.3.0** (the `plan → execute → review → verify` pipeline + retained modes):
+
+| OMC workflow | oh-my-dsh skill | DSH primitive |
 |-----------|-----------------|--------------|
-| Plan（规划） | [`omd-plan`](skills/omd-plan/SKILL.md) | 只读探索 + `subagent` 并行调研 |
-| Execute（执行） | [`omd-execute`](skills/omd-execute/SKILL.md) | `subagent` 并行 + `todo_write` |
-| Review（评审） | [`omd-review`](skills/omd-review/SKILL.md) | `subagent_fork` 独立评审 |
-| Verify（验证） | [`omd-verify`](skills/omd-verify/SKILL.md) | `pwsh`/`bash` 测试 + `subagent` 复核 |
-| Team（分阶段流水线） | [`omd-team`](skills/omd-team/SKILL.md) | `workflow` + `subagent` |
-| Autopilot（自动驾驶） | [`omd-autopilot`](skills/omd-autopilot/SKILL.md) | `goal` + `todo` + `subagent` |
-| Ralph（持久验证循环） | [`omd-ralph`](skills/omd-ralph/SKILL.md) | `ralph` + `goal` 验证循环 |
-| Deep Interview（需求澄清） | [`omd-deep-interview`](skills/omd-deep-interview/SKILL.md) | `ask_user_question` |
-| Ralplan（共识规划） | [`omd-ralplan`](skills/omd-ralplan/SKILL.md) | 并行 `subagent` 草案 + 仲裁收敛 |
-| Research（有据调研） | [`omd-research`](skills/omd-research/SKILL.md) | `web_search`/`web_fetch` + 并行 `subagent` |
-| Autoresearch（评估驱动改进） | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + 评估子代理循环 |
-| Ultragoal（持久多目标） | [`omd-ultragoal`](skills/omd-ultragoal/SKILL.md) | `goal` + `todo_write` + checkpoint 工件 |
-| HUD（状态栏） | [`omd-hud`](skills/omd-hud/SKILL.md) | `dsh-ui` 内联仪表盘（genui） |
+| Plan | [`omd-plan`](skills/omd-plan/SKILL.md) | read-only exploration + parallel `subagent` |
+| Execute | [`omd-execute`](skills/omd-execute/SKILL.md) | parallel `subagent` + `todo_write` |
+| Review | [`omd-review`](skills/omd-review/SKILL.md) | `subagent_fork` independent review |
+| Verify | [`omd-verify`](skills/omd-verify/SKILL.md) | `pwsh`/`bash` tests + `subagent` re-check |
+| Team | [`omd-team`](skills/omd-team/SKILL.md) | `workflow` + `subagent` |
+| Autopilot | [`omd-autopilot`](skills/omd-autopilot/SKILL.md) | `goal` + `todo` + `subagent` |
+| Ralph | [`omd-ralph`](skills/omd-ralph/SKILL.md) | `ralph` + `goal` verify loop |
+| Deep Interview | [`omd-deep-interview`](skills/omd-deep-interview/SKILL.md) | `ask_user_question` |
+| Ralplan | [`omd-ralplan`](skills/omd-ralplan/SKILL.md) | parallel `subagent` drafts + arbitration |
+| Research | [`omd-research`](skills/omd-research/SKILL.md) | `web_search`/`web_fetch` + parallel `subagent` |
+| Autoresearch | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + evaluator loop |
+| Ultragoal | [`omd-ultragoal`](skills/omd-ultragoal/SKILL.md) | `goal` + `todo_write` + checkpoint artifacts |
+| HUD | [`omd-hud`](skills/omd-hud/SKILL.md) | inline `dsh-ui` dashboard (genui) |
 
-**提示词触发 + 工具 skill**（自然语言触发，无独立斜杠命令）：
+**Prompt-trigger + utility skills** (natural-language only, no slash command):
 
-| OMC 触发 | oh-my-dsh skill | DSH 原生载体 |
+| OMC trigger | oh-my-dsh skill | DSH primitive |
 |----------|-----------------|--------------|
-| tdd（测试驱动） | [`omd-tdd`](skills/omd-tdd/SKILL.md) | `pwsh`/`bash` 测试 + red-green-refactor |
-| deepsearch（代码检索） | [`omd-deepsearch`](skills/omd-deepsearch/SKILL.md) | `grep`/`glob`/`read` 本地定位 |
-| deep-analyze（深度分析） | [`omd-deep-analyze`](skills/omd-deep-analyze/SKILL.md) | 并行 `subagent` 多视角 |
-| ultrathink（深度推理） | [`omd-ultrathink`](skills/omd-ultrathink/SKILL.md) | 纯推理（先不动工具） |
-| ai-slop-cleaner（去废话） | [`omd-ai-slop-cleaner`](skills/omd-ai-slop-cleaner/SKILL.md) | `review`/`edit` 精简 |
-| omc-doctor（自检） | [`omd-doctor`](skills/omd-doctor/SKILL.md) | 安装/挂载诊断 |
-| debug（调试） | [`omd-debug`](skills/omd-debug/SKILL.md) | 复现→定位→最小修复→回归 |
-| release（发布） | [`omd-release`](skills/omd-release/SKILL.md) | git + 测试 + changelog + tag |
-| remember（跨会话记忆） | [`omd-remember`](skills/omd-remember/SKILL.md) | 工作区记忆文件 |
-| cancel（取消模式） | [`omd-cancel`](skills/omd-cancel/SKILL.md) | goal pause + interrupt_agent + job_kill |
-| minimal-code-discipline（最小改动） | [`omd-minimal-code-discipline`](skills/omd-minimal-code-discipline/SKILL.md) | YAGNI 阶梯 |
-| external-context（外部上下文） | [`omd-external-context`](skills/omd-external-context/SKILL.md) | `web_fetch`/`read` |
-| visual-verdict（视觉 QA） | [`omd-visual-verdict`](skills/omd-visual-verdict/SKILL.md) | `read_image` 对比 |
-| skillify（提取 skill） | [`omd-skillify`](skills/omd-skillify/SKILL.md) | 写 `SKILL.md` |
-| wiki（知识库） | [`omd-wiki`](skills/omd-wiki/SKILL.md) | 工作区 markdown |
-| omc-help（使用指南） | [`omd-help`](skills/omd-help/SKILL.md) | 实时列 skill/命令索引 |
+| tdd | [`omd-tdd`](skills/omd-tdd/SKILL.md) | `pwsh`/`bash` tests + red-green-refactor |
+| deepsearch | [`omd-deepsearch`](skills/omd-deepsearch/SKILL.md) | `grep`/`glob`/`read` local lookup |
+| deep-analyze | [`omd-deep-analyze`](skills/omd-deep-analyze/SKILL.md) | parallel `subagent` multi-angle |
+| ultrathink | [`omd-ultrathink`](skills/omd-ultrathink/SKILL.md) | pure reasoning (no tools first) |
+| ai-slop-cleaner | [`omd-ai-slop-cleaner`](skills/omd-ai-slop-cleaner/SKILL.md) | `review`/`edit` tightening |
+| omc-doctor | [`omd-doctor`](skills/omd-doctor/SKILL.md) | install/mount diagnostics |
+| debug | [`omd-debug`](skills/omd-debug/SKILL.md) | reproduce→isolate→fix→regress |
+| release | [`omd-release`](skills/omd-release/SKILL.md) | git + tests + changelog + tag |
+| remember | [`omd-remember`](skills/omd-remember/SKILL.md) | workspace memory file |
+| cancel | [`omd-cancel`](skills/omd-cancel/SKILL.md) | goal pause + `interrupt_agent` + `job_kill` |
+| minimal-code-discipline | [`omd-minimal-code-discipline`](skills/omd-minimal-code-discipline/SKILL.md) | YAGNI ladder |
+| external-context | [`omd-external-context`](skills/omd-external-context/SKILL.md) | `web_fetch`/`read` |
+| visual-verdict | [`omd-visual-verdict`](skills/omd-visual-verdict/SKILL.md) | `read_image` comparison |
+| skillify | [`omd-skillify`](skills/omd-skillify/SKILL.md) | write `SKILL.md` |
+| wiki | [`omd-wiki`](skills/omd-wiki/SKILL.md) | workspace markdown |
+| omc-help | [`omd-help`](skills/omd-help/SKILL.md) | live skill/command index |
 
-> **`ultrawork` 已退役**：OMC 在 5.0.0 删除了 `ultrawork`（以及 `ultraqa`/`swarm`/`pipeline` 等），oh-my-dsh 同步移除；其"最大并行扇出"能力已并入 `execute`/`team`/`ralph` 的内部并行纪律。
+> **`ultrawork` is retired** — OMC removed it in 5.0.0 (along with `ultraqa`/`swarm`/`pipeline`); oh-my-dsh removed it too, folding its "maximum parallel fan-out" into `execute`/`team`/`ralph`.
 
-关键差异：OMC 的 HUD 是 CLI 状态栏，而 oh-my-dsh 的 HUD 是**内联在回答正文里的 `dsh-ui` 仪表盘**（stat/progress/timeline/table），因为 DSH 的 Web GUI 本身就在渲染结构化 UI。
+Key difference: OMC's HUD is a CLI status line, while oh-my-dsh's HUD is an **inline `dsh-ui` dashboard in the reply** (stat/progress/timeline/table), because DSH's Web GUI already renders structured UI.
 
-## 目录结构
+## Directory structure
 
 ```
 oh-my-dsh/
-├── package.json              # dsh.bundle manifest（组合包安装入口）
-├── cordis.patch.yml          # 组合包 patch 层（全局命令 + 全局 skill 挂载）
-├── index.js                  # 组合包模块入口
-├── agent.cordis.yml          # agent preset 组合文件（= standard + persona + skill + 命令）
-├── preset.yml                # preset 显示元数据
-├── install.ps1 / install.sh  # preset 手动安装脚本
+├── package.json              # dsh.bundle manifest (bundle install entry)
+├── cordis.patch.yml          # bundle patch layer (global commands + skills)
+├── index.js                  # bundle module entry
+├── agent.cordis.yml          # agent preset composition (= standard + persona + skills + commands)
+├── preset.yml                # preset display metadata
+├── install.ps1 / install.sh  # preset manual install scripts
 ├── LICENSE
 ├── commands/
-│   └── omd-commands.mjs    # 斜杠命令生产者（ESM 插件）
+│   └── omd-commands.mjs      # slash-command producer (ESM plugin)
 ├── skills/
 │   ├── omd-plan/SKILL.md
 │   ├── omd-execute/SKILL.md
@@ -107,23 +135,23 @@ oh-my-dsh/
     └── RELEASE.md
 ```
 
-## 安装 / 使用
+## Install / usage
 
-两种安装方式，**任选其一即可**（bundle 装全局、preset 按会话选）。
+Two forms — pick one (bundle for global, preset for per-session).
 
-**方式 A：组合包 bundle（主要，等价 OMC 的插件市场安装）** —— 全局装好 `/omd-*` 命令与 29 个 skill，profile 里所有会话可见：
+**Form A: bundle (primary, the OMC plugin-marketplace equivalent)** — installs the `/omd-*` commands and 29 skills globally, visible to every session in the profile:
 
 ```sh
-# git 源码安装（纯 JS/Markdown，零构建，无需 allowBuilds 授权；用 @<tag> 可锁定版本）
+# git source (pure JS/Markdown, zero build, no allowBuilds needed; pin with @<tag>)
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
 
-# 或从 npm 安装（等价 OMC 的 npm i -g）
+# or npm (the npm i -g equivalent)
 dsh plugin --profile web add @hawk2048/oh-my-dsh
 ```
 
-装完重启 profile 即可。用户全程只敲一条命令，由 pnpm 拉取，**不手动下载压缩包**。
+Restart the profile. One command, pulled by pnpm — no manual tarball download.
 
-**方式 B：agent preset（可选，按会话选择）** —— 含 persona 与编排工具集的全量会话：
+**Form B: agent preset (optional, per-session)** — full session with persona and the orchestration toolkit:
 
 ```sh
 # Windows
@@ -132,75 +160,75 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 ./install.sh
 ```
 
-然后在 DSH 里**新建会话时选择 "oh-my-dsh 编排"** preset（或把它设为 `agent-presets.default`）。详见 [docs/RELEASE.md](docs/RELEASE.md)。
+Then create a session and pick the "oh-my-dsh 编排" preset (or set it as `agent-presets.default`). See [docs/RELEASE.md](docs/RELEASE.md).
 
-## 怎么用（会话内）
+## Usage (in-session)
 
-两种方式，效果一样：
+Two equivalent ways:
 
-**方式一：自然语言**（代理自动加载对应 skill）
+**Way 1: natural language** (the agent auto-loads the matching skill)
 
-- `先规划一下怎么实现 X` → `omd-plan`
-- `按计划实现` → `omd-execute`
-- `评审一下刚才的改动` → `omd-review`
-- `验证一下，测试要全绿` → `omd-verify`
-- `用 team 做一个任务管理应用` → `omd-team`
-- `autopilot：搭一个 REST API` → `omd-autopilot`
-- `ralph 重构认证，必须测试全绿` → `omd-ralph`
-- `先深度访谈，我想做个 xx` → `omd-deep-interview`
-- `ralplan：多角度论证一下这个架构选型` → `omd-ralplan`
-- `调研一下 X 的最佳实践，要带来源` → `omd-research`
-- `autoresearch：把这份报告打磨到达标` → `omd-autoresearch`
-- `ultragoal：这个长期目标拆成子目标推进` → `omd-ultragoal`
-- `tdd：先写失败测试再实现` → `omd-tdd`
-- `deepsearch：定位谁调用了这个函数` → `omd-deepsearch`
-- `deep-analyze：深度分析一下这块架构` → `omd-deep-analyze`
-- `ultrathink：想清楚再动手` → `omd-ultrathink`
-- `去 AI 废话，精简这段` → `omd-ai-slop-cleaner`
-- `自检一下 oh-my-dsh 装好没` → `omd-doctor`
-- `debug：排查这个报错` → `omd-debug`
-- `发布 v1.2，写 changelog` → `omd-release`
-- `记住这个决定，下个会话还要用` → `omd-remember`
-- `停掉正在跑的 autopilot` → `omd-cancel`
-- `最小改动，别过度设计` → `omd-minimal-code-discipline`
-- `看下这个 issue/链接` → `omd-external-context`
-- `对比这两张截图` → `omd-visual-verdict`
-- `把这段流程沉淀成 skill` → `omd-skillify`
-- `记到知识库/更新文档` → `omd-wiki`
-- `omd 能做什么 / 有哪些命令` → `omd-help`
+- `plan how to implement X` → `omd-plan`
+- `execute the plan` → `omd-execute`
+- `review my changes` → `omd-review`
+- `verify — tests must pass` → `omd-verify`
+- `team, build a task-management app` → `omd-team`
+- `autopilot: build a REST API` → `omd-autopilot`
+- `ralph the auth refactor until green` → `omd-ralph`
+- `deep interview me — I want to build X` → `omd-deep-interview`
+- `ralplan this architecture decision` → `omd-ralplan`
+- `research X best practices, with sources` → `omd-research`
+- `autoresearch this report to passing` → `omd-autoresearch`
+- `ultragoal: break this long goal into subgoals` → `omd-ultragoal`
+- `tdd: failing test first` → `omd-tdd`
+- `deepsearch: who calls this function` → `omd-deepsearch`
+- `deep-analyze this architecture` → `omd-deep-analyze`
+- `ultrathink before acting` → `omd-ultrathink`
+- `strip the AI slop` → `omd-ai-slop-cleaner`
+- `self-check the install` → `omd-doctor`
+- `debug this error` → `omd-debug`
+- `release v1.2 with changelog` → `omd-release`
+- `remember this decision` → `omd-remember`
+- `stop the running autopilot` → `omd-cancel`
+- `minimal change, no over-engineering` → `omd-minimal-code-discipline`
+- `read this issue/link` → `omd-external-context`
+- `compare these screenshots` → `omd-visual-verdict`
+- `turn this flow into a skill` → `omd-skillify`
+- `write this to the wiki` → `omd-wiki`
+- `what can omd do` → `omd-help`
 
-**方式二：斜杠命令**（在输入框敲 `/omd` 弹出候选）
+**Way 2: slash commands** (type `/omd` for candidates)
 
-| 命令 | 等价 skill |
+| Command | Equivalent skill |
 |------|-----------|
-| `/omd-plan <任务>` | `omd-plan` |
-| `/omd-execute <任务>` | `omd-execute` |
-| `/omd-review <任务>` | `omd-review` |
-| `/omd-verify <任务>` | `omd-verify` |
-| `/omd-team <任务>` | `omd-team` |
-| `/omd-autopilot <目标>` | `omd-autopilot` |
-| `/omd-ralph <目标>` | `omd-ralph` |
-| `/omd-deep-interview <主题>` | `omd-deep-interview` |
-| `/omd-ralplan <描述>` | `omd-ralplan` |
-| `/omd-research <问题>` | `omd-research` |
-| `/omd-autoresearch <任务>` | `omd-autoresearch` |
-| `/omd-ultragoal <目标>` | `omd-ultragoal` |
+| `/omd-plan <task>` | `omd-plan` |
+| `/omd-execute <task>` | `omd-execute` |
+| `/omd-review <task>` | `omd-review` |
+| `/omd-verify <task>` | `omd-verify` |
+| `/omd-team <task>` | `omd-team` |
+| `/omd-autopilot <goal>` | `omd-autopilot` |
+| `/omd-ralph <goal>` | `omd-ralph` |
+| `/omd-deep-interview <topic>` | `omd-deep-interview` |
+| `/omd-ralplan <desc>` | `omd-ralplan` |
+| `/omd-research <question>` | `omd-research` |
+| `/omd-autoresearch <task>` | `omd-autoresearch` |
+| `/omd-ultragoal <goal>` | `omd-ultragoal` |
 
-代理会加载对应的 skill，按该模式编排，并用 HUD 实时汇报进度。
+The agent loads the matching skill, runs that mode, and reports progress via the HUD.
 
-## 为什么是 skill + bundle/preset，而不是新工具
+## Why skills + bundle/preset, not new tools
 
-DSH 的原生多智能体原语（`workflow` 的流水线/并行、`subagent` 的扇出、`ralph` 的 fresh-agent 循环、`goal` 的跨轮目标）**已经覆盖了 OMC 的编排语义**。oh-my-dsh 因此不引入新的宿主工具或运行时，而是把「什么时候用哪个原语、怎么编排、怎么收尾」沉淀成可复用的 skill。
+DSH's native multi-agent primitives (`workflow` pipelines/parallel, `subagent` fan-out, `ralph` fresh-agent loops, `goal` cross-turn objectives) **already cover OMC's orchestration semantics**. oh-my-dsh therefore adds no new host tools or runtime — it distills "which primitive to use, when, how to orchestrate, and how to close out" into reusable skills.
 
-分发也复用 DSH 原生机制：`cordis.patch.yml` + `package.json` 的 `dsh.bundle` manifest 让 `dsh plugin add` 装成**组合包**（全局命令 + 全局 skill），`agent.cordis.yml` 让它作为**agent preset** 按会话挂载（persona + 命令 + skill）。斜杠命令的 `commands/omd-commands.mjs` 是一个 ESM 插件，注入 DSH 自带的 `commands` 服务注册命令——零运行时风险，升级 DSH 不受影响。
+Distribution reuses DSH's native mechanisms: `cordis.patch.yml` + the `dsh.bundle` manifest make `dsh plugin add` install a **bundle** (global commands + skills), and `agent.cordis.yml` makes it an **agent preset** (per-session persona + commands + skills). The slash-command `commands/omd-commands.mjs` is an ESM plugin that injects DSH's built-in `commands` registry — zero runtime risk, survives DSH upgrades.
 
-## 扩展
+## Extending
 
-- **加模式**：在 `skills/` 下新增 `omd-xxx/SKILL.md`（YAML frontmatter 写 `name` + `description`）。
-- **加命令**：在 `commands/omd-commands.mjs` 的 `MODES` 数组里追加一条。
-- **改 persona**：编辑 `agent.cordis.yml` 顶部的 `persona` 行。
-- **把 skill 做成全局**：走 bundle（`dsh plugin add`），见上文方式 A；或把 `skills/*` 复制到 `${DSH_HOME}/skills/`。
+- **Add a mode**: add `skills/omd-xxx/SKILL.md` (YAML frontmatter with `name` + `description`).
+- **Add a command**: append an entry to the `MODES` array in `commands/omd-commands.mjs`.
+- **Change the persona**: edit the `persona` row at the top of `agent.cordis.yml`.
+- **Make a skill global**: use the bundle (`dsh plugin add`) or copy `skills/*` to `${DSH_HOME}/skills/`.
 
-## 许可
+## License
 
-MIT。灵感来自 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)。
+MIT. Inspired by [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode).

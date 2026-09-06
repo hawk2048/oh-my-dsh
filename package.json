@@ -12,7 +12,8 @@
     "index.js",
     "commands/",
     "skills/",
-    "cordis.patch.yml"
+    "cordis.patch.yml",
+    "README.zh.md"
   ],
   "dsh": {
     "bundle": {
