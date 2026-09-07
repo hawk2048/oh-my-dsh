@@ -1,6 +1,6 @@
 ---
 name: omd-deep-analyze
-description: "Deep-analyze: multi-angle, evidence-backed analysis of code, architecture, or a problem. Use when the user says deep-analyze / 深度分析 / 分析一下 / 为什么这样 / 值得吗, and wants thorough reasoning, not a quick fix."
+description: "深度分析：对代码、架构或问题做多角度、有证据支撑的分析。需要透彻推理而不是快速修补时使用；触发词：deep-analyze / 深度分析 / 分析一下 / 为什么这样 / 值得吗。"
 ---
 
 # oh-my-dsh · Deep-analyze 深度分析

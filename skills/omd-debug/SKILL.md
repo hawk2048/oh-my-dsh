@@ -1,6 +1,6 @@
 ---
 name: omd-debug
-description: "Debug: reproduce the failure, isolate the cause with evidence, fix minimally, and lock it with a regression test. Use when the user says debug / 调试 / 报错 / 崩溃 / 为什么失败 / 修 bug / 排查."
+description: "调试：复现失败，用证据定位根因，最小化修复，并用回归测试锁定。触发词：debug / 调试 / 报错 / 崩溃 / 为什么失败 / 修 bug / 排查。"
 ---
 
 # oh-my-dsh · Debug 结构化调试

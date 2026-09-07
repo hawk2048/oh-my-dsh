@@ -1,6 +1,6 @@
 ---
 name: omd-review
-description: "Review: a separate review pass that evaluates the implementation — never self-approve in the same context. Route to a reviewer subagent (subagent_fork or subagent), read the diffs, produce an issues list. Use as the review stage of plan→execute→review→verify, or when the user asks to review/评审/审查/code review."
+description: "评审：独立的评审环节，评估实现——绝不在同一上下文里自我背书。交给评审子代理（subagent_fork 或 subagent）、读 diff、产出缺陷清单。作为 plan→execute→review→verify 的评审阶段；触发词：review / 评审 / 审查 / code review。"
 ---
 
 # oh-my-dsh · Review 评审

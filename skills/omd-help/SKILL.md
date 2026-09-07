@@ -1,6 +1,6 @@
 ---
 name: omd-help
-description: "Help: show the oh-my-dsh menu — every omd-* skill and /omd-* command, grouped by category, and how to trigger each. Use when the user asks help / 帮助 / omd 能做什么 / 有哪些命令 / 有什么模式 / usage."
+description: "帮助：展示 oh-my-dsh 菜单——全部 omd-* 技能与 /omd-* 命令，按分类分组并说明各自触发方式。触发词：help / 帮助 / omd 能做什么 / 有哪些命令 / 有什么模式 / usage。"
 ---
 
 # oh-my-dsh · Help 使用索引

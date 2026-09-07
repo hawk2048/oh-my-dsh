@@ -1,6 +1,6 @@
 ---
 name: omd-ralplan
-description: "Ralplan: consensus planning — fan out several independent planner subagents from different angles, then run structured deliberation that adjudicates disagreements into one consensus plan. Use for high-risk or ambiguous features that need multi-perspective planning, or when the user says ralplan/共识规划/多方论证/审慎规划."
+description: "共识规划：多视角并行规划——派出多个独立规划子代理从不同角度切入，再运行结构化审议裁决分歧，收敛为一份共识计划。适合高风险或需求模糊、需要多视角规划的特性；触发词：ralplan / 共识规划 / 多方论证 / 审慎规划。"
 ---
 
 # oh-my-dsh · Ralplan 共识规划

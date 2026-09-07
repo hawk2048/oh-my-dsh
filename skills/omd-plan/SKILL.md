@@ -1,6 +1,6 @@
 ---
 name: omd-plan
-description: "Plan: explore first with non-mutating reads/search/static analysis, then produce a concrete implementation plan (task breakdown with dependencies + acceptance criteria + file-level changes). No implementation. Use as the first stage of the plan→execute→review→verify pipeline, or when the user asks to plan/规划/方案/计划/怎么实现."
+description: "规划：先用只读方式探索（读/搜索/静态分析），再产出具体的实现计划（带依赖的任务拆解 + 验收标准 + 文件级改动）。不写代码。作为 plan→execute→review→verify 流水线的第一阶段；触发词：plan / 规划 / 方案 / 计划 / 怎么实现。"
 ---
 
 # oh-my-dsh · Plan 规划

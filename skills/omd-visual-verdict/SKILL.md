@@ -1,6 +1,6 @@
 ---
 name: omd-visual-verdict
-description: "Visual-verdict: compare a screenshot or rendered output against a reference and give a structured pass/fail verdict with specific deltas. Use when the user says visual-verdict / 对比截图 / 看下 UI 对不对 / 视觉检查 / 对比这两张图."
+description: "视觉裁决：把截图或渲染输出与参考对照，给出结构化的通过/失败裁决与具体差异。触发词：visual-verdict / 对比截图 / 看下 UI 对不对 / 视觉检查 / 对比这两张图。"
 ---
 
 # oh-my-dsh · Visual-verdict 视觉 QA

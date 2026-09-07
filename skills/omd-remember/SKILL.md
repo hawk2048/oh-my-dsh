@@ -1,6 +1,6 @@
 ---
 name: omd-remember
-description: "Remember: persist durable notes, decisions, and facts to a workspace memory file so they survive compaction and later sessions. Use when the user says remember / 记住 / 记下来 / 别忘 / 存个备忘 / 记录这个决定."
+description: "记住：把持久化的笔记、决策与事实写入工作区记忆文件，让它们在压缩和后续会话中留存。触发词：remember / 记住 / 记下来 / 别忘 / 存个备忘 / 记录这个决定。"
 ---
 
 # oh-my-dsh · Remember 跨会话记忆

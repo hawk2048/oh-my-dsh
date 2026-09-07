@@ -1,6 +1,6 @@
 ---
 name: omd-minimal-code-discipline
-description: "Minimal-code-discipline: make the smallest correct diff — existence-first, reuse before writing, shortest correct change. Use when the user says minimal / 最小改动 / YAGNI / 别过度设计 / 只改必要的 / 能复用就复用."
+description: "最小改动纪律：做最小而正确的改动——先确认存在、能复用就不新写、最短的正确修改。触发词：minimal / 最小改动 / YAGNI / 别过度设计 / 只改必要的 / 能复用就复用。"
 ---
 
 # oh-my-dsh · Minimal-code-discipline 最小改动纪律

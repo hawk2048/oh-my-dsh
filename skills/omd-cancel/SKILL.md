@@ -1,6 +1,6 @@
 ---
 name: omd-cancel
-description: "Cancel: stop an in-flight orchestration mode — halt goal rounds, interrupt background subagents, kill jobs — and leave a clean checkpoint. Use when the user says cancel / 停止 / 停下 / 取消 / 别跑了 / stop / abort."
+description: "取消：干净地停止进行中的编排模式——暂停目标轮次、中断后台子代理、终止任务——并留下干净的检查点。触发词：cancel / 停止 / 停下 / 取消 / 别跑了 / stop / abort。"
 ---
 
 # oh-my-dsh · Cancel 取消进行中模式

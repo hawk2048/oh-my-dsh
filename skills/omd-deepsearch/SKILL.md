@@ -1,6 +1,6 @@
 ---
 name: omd-deepsearch
-description: "Deepsearch: locate implementations, call sites, definitions, and data flow inside the local codebase. Use when the user says deepsearch / 找一下 / 代码在哪 / 定位 / 谁调用了 / 哪里实现的, or asks where something lives rather than how to do it."
+description: "代码库聚焦检索：定位本地代码库中的实现、调用点、定义与数据流。问「东西在哪」而非「怎么做」时使用；触发词：deepsearch / 找一下 / 代码在哪 / 定位 / 谁调用了 / 哪里实现的。"
 ---
 
 # oh-my-dsh · Deepsearch 代码库聚焦检索

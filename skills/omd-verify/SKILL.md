@@ -1,6 +1,6 @@
 ---
 name: omd-verify
-description: "Verify: verify before claiming completion — run tests/build, check against acceptance criteria, collect evidence, size the verifier (small inline, large/security via subagent), and iterate on failure. Use as the final stage of plan→execute→review→verify, or when the user asks to verify/验证/测试/检查/跑通."
+description: "验证：宣称完成前先验证——跑测试/构建、对照验收标准、收集证据（小规模内联，大规模/安全走子代理），失败则迭代。作为 plan→execute→review→verify 的最终阶段；触发词：verify / 验证 / 测试 / 检查 / 跑通。"
 ---
 
 # oh-my-dsh · Verify 验证

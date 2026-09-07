@@ -1,6 +1,6 @@
 ---
 name: omd-release
-description: "Release: walk the repo's release process — version bump, changelog, tests, tag, build — and produce a release checklist. Use when the user says release / 发布 / 发版 / 打 tag / 打版本 / changelog."
+description: "发布：走完仓库的发布流程——版本号、changelog、测试、打 tag、构建——并产出发布检查清单。触发词：release / 发布 / 发版 / 打 tag / 打版本 / changelog。"
 ---
 
 # oh-my-dsh · Release 发布

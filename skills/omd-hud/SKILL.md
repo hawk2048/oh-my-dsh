@@ -1,6 +1,6 @@
 ---
 name: omd-hud
-description: "HUD: render live orchestration progress as an inline dsh-ui dashboard — stat cards, progress bars, timeline, and a subagent-status table. Use to show real-time progress of any oh-my-dsh mode (plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/tdd/deepsearch/deep-analyze/ultrathink/ai-slop-cleaner/debug/release/remember/cancel/minimal-code-discipline/external-context/visual-verdict/skillify/wiki/help/doctor)."
+description: "HUD：把编排进度渲染成内联 dsh-ui 仪表盘——统计卡片、进度条、时间线与子代理状态表。用于实时展示任意 oh-my-dsh 模式的进度（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/tdd/deepsearch/deep-analyze/ultrathink/ai-slop-cleaner/debug/release/remember/cancel/minimal-code-discipline/external-context/visual-verdict/skillify/wiki/help/doctor）。"
 ---
 
 # oh-my-dsh · HUD 实时进度仪表盘

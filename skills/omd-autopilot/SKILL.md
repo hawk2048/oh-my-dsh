@@ -1,6 +1,6 @@
 ---
 name: omd-autopilot
-description: "Autopilot: one lead agent (you) drives a single objective to verified completion across goal rounds, delegating via subagents and tracking with todo_write. Use for end-to-end autonomous feature work with minimal ceremony, or when the user says autopilot/自动驾驶/自主执行/自动驾驶式."
+description: "自动驾驶：一个主控代理（你）跨目标轮次把单一目标持续做到已验证完成，用子代理委派并以 todo_write 跟踪。适合低仪式感的端到端自主功能开发；触发词：autopilot / 自动驾驶 / 自主执行 / 自动驾驶式。"
 ---
 
 # oh-my-dsh · Autopilot 自动驾驶

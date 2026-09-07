@@ -1,6 +1,6 @@
 ---
 name: omd-execute
-description: "Execute: implement an agreed plan — route multi-file changes/refactors/debugging to executor subagents (background parallel), work directly on trivial edits, track with todo_write. Use as the implementation stage of plan→execute→review→verify, or when the user asks to execute/实现/开发/动手/开始写."
+description: "执行：按已确认的计划实现——多文件改动/重构/调试交给执行子代理（后台并行），琐碎改动直接做，用 todo_write 跟踪。作为 plan→execute→review→verify 流水线的实现阶段；触发词：execute / 实现 / 开发 / 动手 / 开始写。"
 ---
 
 # oh-my-dsh · Execute 执行

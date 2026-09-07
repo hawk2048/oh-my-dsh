@@ -1,6 +1,6 @@
 ---
 name: omd-autoresearch
-description: "Autoresearch: a bounded evaluator-driven improvement loop — produce a version, an evaluator subagent scores it against the target criteria, then improve, repeat until it meets the bar or the round cap. Use when the user asks to autoresearch/自动调研改进/边做边评/持续打磨到达标."
+description: "自动调研改进：有界的评估器驱动改进循环——产出一版，评估子代理对照目标标准打分，再改进、再评，直到达标或到达轮次上限。触发词：autoresearch / 自动调研改进 / 边做边评 / 持续打磨到达标。"
 ---
 
 # oh-my-dsh · Autoresearch 评估器驱动的改进循环

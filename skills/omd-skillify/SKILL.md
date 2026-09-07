@@ -1,6 +1,6 @@
 ---
 name: omd-skillify
-description: "Skillify: extract a repeatable workflow from the current session into a new reusable SKILL.md. Use when the user says skillify / 把这段流程存成 skill / 沉淀成技能 / 做成可复用 / 记住这套做法."
+description: "技能化：把当前会话里可复用的流程提炼成新的可复用 SKILL.md。触发词：skillify / 把这段流程存成 skill / 沉淀成技能 / 做成可复用 / 记住这套做法。"
 ---
 
 # oh-my-dsh · Skillify 从会话提取 skill

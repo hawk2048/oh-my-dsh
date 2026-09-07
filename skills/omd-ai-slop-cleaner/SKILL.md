@@ -1,6 +1,6 @@
 ---
 name: omd-ai-slop-cleaner
-description: "AI-slop-cleaner: strip AI-generated filler, boilerplate, redundant comments, and vague prose from code or text. Use when the user says ai-slop / 去废话 / 精简 / 去水 / 太啰嗦 / 去AI味, or wants output tightened."
+description: "去AI味：清除代码或文本里 AI 生成的废话、套话、冗余注释与含糊表述。触发词：ai-slop / 去废话 / 精简 / 去水 / 太啰嗦 / 去AI味；或想让输出更紧凑时。"
 ---
 
 # oh-my-dsh · AI-slop-cleaner 去废话

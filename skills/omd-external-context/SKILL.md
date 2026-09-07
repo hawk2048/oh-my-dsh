@@ -1,6 +1,6 @@
 ---
 name: omd-external-context
-description: "External-context: pull context from outside the repo — a URL, a doc, an issue, a package README — and summarize it before reasoning or editing. Use when the user gives a URL/issue/doc reference, or says load context / 看下这个链接 / 拉一下上下文 / 参考这个文档."
+description: "外部上下文：从仓库之外拉取上下文——URL、文档、issue、包 README——在推理或编辑前先做摘要。用户给出 URL/issue/文档引用时使用；触发词：load context / 看下这个链接 / 拉一下上下文 / 参考这个文档。"
 ---
 
 # oh-my-dsh · External-context 加载外部上下文

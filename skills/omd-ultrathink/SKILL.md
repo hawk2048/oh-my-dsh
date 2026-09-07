@@ -1,6 +1,6 @@
 ---
 name: omd-ultrathink
-description: "Ultrathink: before acting, exhaustively enumerate edge cases, weigh alternatives, and rehearse failure modes. Use when the user says ultrathink / 深度思考 / 想清楚 / 多想想 / 别急着动手 / 三思, and wants deep reasoning before any tool use."
+description: "深度思考：行动前穷举边界情况、权衡备选方案、预演失败模式。触发词：ultrathink / 深度思考 / 想清楚 / 多想想 / 别急着动手 / 三思；任何工具使用前需要深度推理时。"
 ---
 
 # oh-my-dsh · Ultrathink 深度推理

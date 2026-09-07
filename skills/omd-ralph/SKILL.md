@@ -1,6 +1,6 @@
 ---
 name: omd-ralph
-description: "Ralph: persistent verify/fix loops with no silent partials. Use the native ralph tool for explicit fresh-agent iteration, or the manual goal+verify loop otherwise. Use when the task must complete fully with verification, or the user says ralph/拉夫/verify-fix/必须做完."
+description: "拉夫：持久验证/修复循环，不留静默半成品。显式全新代理迭代用原生 ralph 工具，否则用手动 goal+verify 循环。任务必须完整完成并验证时使用；触发词：ralph / 拉夫 / verify-fix / 必须做完。"
 ---
 
 # oh-my-dsh · Ralph 持久验证循环

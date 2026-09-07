@@ -1,6 +1,6 @@
 ---
 name: omd-team
-description: "Team multi-agent orchestration: run a staged pipeline (team-plan → team-prd → team-exec → team-verify → team-fix loop) as a DSH workflow script with subagent fan-out. Use when the user asks for team orchestration, a multi-agent pipeline, or a feature spanning several subsystems (team/团队/多智能体流水线)."
+description: "团队多智能体编排：运行分阶段流水线（team-plan → team-prd → team-exec → team-verify → team-fix 循环），以 DSH workflow 脚本 + 子代理扇出实现。需要团队编排、多智能体流水线或跨子系统特性时使用；触发词：team / 团队 / 多智能体流水线。"
 ---
 
 # oh-my-dsh · Team 分阶段流水线

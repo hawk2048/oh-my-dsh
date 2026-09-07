@@ -1,6 +1,6 @@
 ---
 name: omd-doctor
-description: "Doctor: self-check the oh-my-dsh install — verify the skills directory, the /omd-* slash commands, and the preset/bundle mount — and diagnose why a mode isn't working. Use when the user says doctor / 自检 / 诊断 / 为什么没生效 / 检查一下安装 / omd 有问题."
+description: "自检诊断：检查 oh-my-dsh 装得对不对——核对技能目录、/omd-* 斜杠命令与 preset/bundle 挂载——并诊断某个模式为什么没生效。触发词：doctor / 自检 / 诊断 / 为什么没生效 / 检查一下安装 / omd 有问题。"
 ---
 
 # oh-my-dsh · Doctor 自检诊断

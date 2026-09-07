@@ -1,6 +1,6 @@
 ---
 name: omd-deep-interview
-description: "Deep Interview: Socratic requirement clarification before any code — converge a vague idea across weighted dimensions using ask_user_question. Use when requirements are vague/ambiguous, or the user says deep-interview/深度访谈/先澄清需求/需求访谈."
+description: "深度访谈：写代码前用苏格拉底式追问澄清需求——用 ask_user_question 在加权维度上收敛模糊想法。需求模糊或有歧义时使用；触发词：deep-interview / 深度访谈 / 先澄清需求 / 需求访谈。"
 ---
 
 # oh-my-dsh · Deep Interview 需求澄清

@@ -1,6 +1,6 @@
 ---
 name: omd-tdd
-description: "TDD (test-driven development): write the failing test first, then the minimal implementation, then refactor (red-green-refactor). Use when the user says tdd / 测试驱动 / 先写测试 / red-green / 红绿重构, or wants tests to drive development."
+description: "测试驱动开发：先写会失败的测试，再做最小实现，然后重构（红-绿-重构）。触发词：tdd / 测试驱动 / 先写测试 / red-green / 红绿重构；或想用测试驱动开发时。"
 ---
 
 # oh-my-dsh · TDD 测试驱动开发

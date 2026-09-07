@@ -1,6 +1,6 @@
 ---
 name: omd-research
-description: "Research: investigate an open question and return grounded findings — every claim backed by a source. Fan out parallel research subagents (web_search/web_fetch + repo docs), then synthesize a sourced report. Use when the user asks to research/调研/查证/调查/求证."
+description: "调研：查证开放问题并返回有据结论——每条结论都有来源背书。并行派出研究子代理（web_search/web_fetch + 仓库文档），再综合成有来源的报告。触发词：research / 调研 / 查证 / 调查 / 求证。"
 ---
 
 # oh-my-dsh · Research 有据调研

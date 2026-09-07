@@ -1,6 +1,6 @@
 ---
 name: omd-wiki
-description: "Wiki: maintain a lightweight markdown knowledge base in the workspace — create, update, and cross-link pages and keep them consistent with the code. Use when the user says wiki / 记到知识库 / 更新文档 / 维护文档 / 写进 wiki."
+description: "知识库：维护工作区里的轻量 markdown 知识库——创建、更新、交叉链接页面，并让它们与代码保持一致。触发词：wiki / 记到知识库 / 更新文档 / 维护文档 / 写进 wiki。"
 ---
 
 # oh-my-dsh · Wiki 知识库维护

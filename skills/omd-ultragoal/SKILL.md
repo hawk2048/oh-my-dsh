@@ -1,6 +1,6 @@
 ---
 name: omd-ultragoal
-description: "Ultragoal: a durable multi-goal workflow — split one big outcome into multiple sub-goals, checkpoint each to workspace artifacts, and keep a ledger so progress survives turns and sessions. Use when the user asks to ultragoal/持久目标/多目标/长期目标/带台账推进."
+description: "持久目标：持久的多目标工作流——把一个大成果拆成多个子目标，各自 checkpoint 到工作区工件，并维护台账让进度跨回合、跨会话存活。触发词：ultragoal / 持久目标 / 多目标 / 长期目标 / 带台账推进。"
 ---
 
 # oh-my-dsh · Ultragoal 持久多目标
