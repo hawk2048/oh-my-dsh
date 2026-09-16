@@ -15,9 +15,9 @@ description: "帮助：展示 oh-my-dsh 菜单——全部 omd-* 技能与 /omd-
 ## 展示纪律
 
 1. **列实时清单**：用 `glob` 列 `skills/*/SKILL.md`，读每个的 frontmatter `name` + `description` 首句，别凭记忆硬背——清单会随版本变。
-2. **分类呈现**：编排流水线（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal）/ 提示词触发纪律（tdd/deepsearch/deep-analyze/ultrathink/ai-slop-cleaner）/ 工具 skill（debug/release/remember/cancel/minimal-code-discipline/external-context/visual-verdict/skillify/wiki/doctor）/ HUD，每类给「技能名 + 一句话用途」。
-3. **命令面**：12 条 `/omd-*` 斜杠命令（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal）。说明两者区别：**斜杠命令 = 直接进对应模式；自然语言 = 说清需求自动触发对应 skill**。
-4. **给入口**：按用户目标指路——「要规划」→ `omd-plan`，「多人拆任务」→ `omd-team`，「修 bug」→ `omd-debug`，「发版」→ `omd-release`。
+2. **分类呈现**：编排流水线（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal）/ 表达与推理纪律（pyramid/deep-analyze/ultrathink/ai-slop-cleaner）/ 工程纪律（tdd/deepsearch/debug/release/minimal-code-discipline）/ 工具 skill（remember/cancel/external-context/visual-verdict/skillify/wiki/doctor）/ HUD，每类给「技能名 + 一句话用途」。
+3. **命令面**：13 条 `/omd-*` 斜杠命令（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/pyramid）。说明两者区别：**斜杠命令 = 直接进对应模式；自然语言 = 说清需求自动触发对应 skill**。
+4. **给入口**：按用户目标指路——「要规划」→ `omd-plan`，「多人拆任务」→ `omd-team`，「修 bug」→ `omd-debug`，「发版」→ `omd-release`，「讲不清楚/要写汇报」→ `omd-pyramid`。
 
 ## 与其它模式的关系
 

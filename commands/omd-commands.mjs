@@ -1,5 +1,6 @@
 // oh-my-dsh 斜杠命令生产者。
-// 注册 plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal 十二条人类命令。
+// 注册 13 条人类命令：12 条编排命令（plan/execute/review/verify/team/autopilot/ralph/
+// deep-interview/ralplan/research/autoresearch/ultragoal）+ pyramid（金字塔结构化表达）表达纪律命令。
 // 每条 handler 把任务作为一条用户消息提交给模型（唤醒模型并让它加载对应
 // omd-* skill），然后返回一条直接 UI 确认（不进入模型请求）。
 //
@@ -121,6 +122,14 @@ const MODES = [
     label: '持久目标',
     skill: 'omd-ultragoal',
     build: (t) => `请加载 omd-ultragoal skill，把以下大目标拆成多子目标、带 checkpoint 工件与台账持续推进，并用 HUD 输出子目标进度：${t}`,
+  },
+  {
+    name: 'omd-pyramid',
+    description: '金字塔表达：把内容重组为结论先行 + MECE 分组 + 层层支撑',
+    hint: '<内容或主题>',
+    label: '金字塔表达',
+    skill: 'omd-pyramid',
+    build: (t) => `请加载 omd-pyramid skill，用金字塔原理（结论先行、以上统下、归类分组 MECE、逻辑递进，必要时 SCQA 开场）重组以下内容的表达，并用 HUD 输出结构对照：${t}`,
   },
 ]
 

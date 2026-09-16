@@ -7,13 +7,13 @@
 
 **A multi-agent orchestration layer for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH)** — ports [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)'s orchestration modes onto DSH's native primitives (`workflow` / `subagent` / `ralph` / `goal`).
 
-> Two ways to trigger: **natural language** (29 skills, auto-loaded by the agent) + **slash commands** (12 `/omd-*` commands). Start a session, orchestration is ready.
+> Two ways to trigger: **natural language** (30 skills, auto-loaded by the agent) + **slash commands** (13 `/omd-*` commands). Start a session, orchestration is ready.
 
 [中文](README.zh.md)
 
 ## Quick Start
 
-One command installs all 29 skills + 12 `/omd-*` commands (the OMC plugin-marketplace equivalent):
+One command installs all 30 skills + 13 `/omd-*` commands (the OMC plugin-marketplace equivalent):
 
 ```sh
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
@@ -36,7 +36,7 @@ Restart the profile, type `/omd` to see command candidates, or use natural langu
 
 - **Zero configuration** — one `dsh plugin add` installs everything; the bundle self-registers, no setup wizard.
 - **Team-first orchestration** — Team is the canonical staged pipeline (`team-plan → team-prd → team-exec → team-verify → team-fix`), built on DSH's native `workflow`.
-- **Natural language interface** — describe what you want; the 29 `omd-*` skills auto-load, nothing to memorize.
+- **Natural language interface** — describe what you want; the 30 `omd-*` skills auto-load, nothing to memorize.
 - **Automatic parallelization** — complex tasks fan out across parallel `subagent`s.
 - **Persistent execution** — Ralph / Autopilot / Ultragoal keep going until verified complete (native `ralph` loops + `goal` cross-turn objectives).
 - **Zero runtime overhead** — adds no new host tools or runtime, just skills over DSH's native primitives, so you keep DSH's own model routing and sandbox.
@@ -84,6 +84,12 @@ Aligned to OMC **v5.3.0** (the `plan → execute → review → verify` pipeline
 | wiki | [`omd-wiki`](skills/omd-wiki/SKILL.md) | workspace markdown |
 | omc-help | [`omd-help`](skills/omd-help/SKILL.md) | live skill/command index |
 
+**New in this plugin (no OMC counterpart):**
+
+| Capability | oh-my-dsh skill | DSH primitive |
+|------|-----------------|--------------|
+| Pyramid structured expression (conclusion-first + MECE) | [`omd-pyramid`](skills/omd-pyramid/SKILL.md) | pure expression discipline + `dsh-ui` hierarchy mapping (genui) |
+
 > **`ultrawork` is retired** — OMC removed it in 5.0.0 (along with `ultraqa`/`swarm`/`pipeline`); oh-my-dsh removed it too, folding its "maximum parallel fan-out" into `execute`/`team`/`ralph`.
 
 Key difference: OMC's HUD is a CLI status line, while oh-my-dsh's HUD is an **inline `dsh-ui` dashboard in the reply** (stat/progress/timeline/table), because DSH's Web GUI already renders structured UI.
@@ -114,6 +120,7 @@ oh-my-dsh/
 │   ├── omd-research/SKILL.md
 │   ├── omd-autoresearch/SKILL.md
 │   ├── omd-ultragoal/SKILL.md
+│   ├── omd-pyramid/SKILL.md
 │   ├── omd-tdd/SKILL.md
 │   ├── omd-deepsearch/SKILL.md
 │   ├── omd-deep-analyze/SKILL.md
@@ -140,7 +147,7 @@ oh-my-dsh/
 
 Two forms — pick one (bundle for global, preset for per-session).
 
-**Form A: bundle (primary, the OMC plugin-marketplace equivalent)** — installs the `/omd-*` commands and 29 skills globally, visible to every session in the profile:
+**Form A: bundle (primary, the OMC plugin-marketplace equivalent)** — installs the 13 `/omd-*` commands and 30 skills globally, visible to every session in the profile:
 
 ```sh
 # git source (pure JS/Markdown, zero build, no allowBuilds needed; pin with @<tag>)
@@ -160,6 +167,8 @@ Restart the profile. One command, pulled by pnpm — no manual tarball download.
 # macOS / Linux
 ./install.sh
 ```
+
+The installer is **non-destructive**: it never deletes the preset directory, keeps skills you added locally, and backs up any local edit it would overwrite as `<name>.bak-<timestamp>`. Re-running is safe and reversible.
 
 Then create a session and pick the "oh-my-dsh 编排" preset (or set it as `agent-presets.default`). See [docs/RELEASE.md](docs/RELEASE.md).
 
@@ -181,6 +190,7 @@ Two equivalent ways:
 - `research X best practices, with sources` → `omd-research`
 - `autoresearch this report to passing` → `omd-autoresearch`
 - `ultragoal: break this long goal into subgoals` → `omd-ultragoal`
+- `structure this as a pyramid / conclusion first / MECE` → `omd-pyramid`
 - `tdd: failing test first` → `omd-tdd`
 - `deepsearch: who calls this function` → `omd-deepsearch`
 - `deep-analyze this architecture` → `omd-deep-analyze`
@@ -214,6 +224,7 @@ Two equivalent ways:
 | `/omd-research <question>` | `omd-research` |
 | `/omd-autoresearch <task>` | `omd-autoresearch` |
 | `/omd-ultragoal <goal>` | `omd-ultragoal` |
+| `/omd-pyramid <content>` | `omd-pyramid` |
 
 The agent loads the matching skill, runs that mode, and reports progress via the HUD.
 

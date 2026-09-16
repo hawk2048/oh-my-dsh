@@ -31,14 +31,18 @@
       deliberation), Research (sourced investigation), Autoresearch (evaluator-driven
       improvement loop), Ultragoal (durable multi-goal workflow with checkpointed artifacts),
       and HUD (inline dsh-ui progress dashboards). Prompt-trigger disciplines also ship as
-      skills — tdd (red-green-refactor), deepsearch (codebase-focused lookup), deep-analyze
+      skills — pyramid (answer-first MECE structured expression: conclusion in the first line,
+      3–5 mutually exclusive points per level, every layer supporting the one above), tdd
+      (red-green-refactor), deepsearch (codebase-focused lookup), deep-analyze
       (multi-angle evidence-backed analysis), ultrathink (exhaustive reasoning before acting),
       ai-slop-cleaner (strip AI filler) — plus doctor (self-check the install), and utility
       disciplines: debug (reproduce→isolate→fix→verify), release (version→changelog→tag→artifact),
       remember (durable cross-session notes), cancel (cleanly halt an in-flight mode), minimal-code-discipline
       (smallest correct diff / YAGNI), external-context (pull in URLs/docs/issues), visual-verdict
       (structured screenshot QA), skillify (extract a reusable skill), wiki (markdown knowledge
-      base), and help (usage index). Load the matching omd-* skill before entering a mode; prefer parallel subagent
+      base), and help (usage index). Load the matching omd-* skill before entering a mode; default
+      to leading each report with its conclusion (omd-pyramid lists the exceptions);
+      prefer parallel subagent
       delegation, and drive every long-running objective through the goal tools rather than a single turn.
 
 - id: agent-instructions
@@ -115,7 +119,7 @@
 
 # oh-my-dsh slash commands (/omd-plan /omd-execute /omd-review /omd-verify
 # /omd-team /omd-autopilot /omd-ralph /omd-deep-interview /omd-ralplan
-# /omd-research /omd-autoresearch /omd-ultragoal): a preset-shipped ESM producer
+# /omd-research /omd-autoresearch /omd-ultragoal /omd-pyramid): a preset-shipped ESM producer
 # — the relative `name` resolves against the preset's own directory. Each handler
 # submits a user message that steers the model into the matching omd-* skill,
 # then returns a direct UI acknowledgement.

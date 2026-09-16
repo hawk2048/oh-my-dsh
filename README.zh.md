@@ -7,13 +7,13 @@
 
 **面向 DeepSeek Harness (DSH) 的多智能体编排层** —— 把 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) 的编排模式，映射到 DSH 原生原语（`workflow` / `subagent` / `ralph` / `goal`）之上。
 
-> 两种触发方式：**自然语言**（29 个随 preset 打包的编排 skill，代理自动加载）+ **斜杠命令**（12 条，敲 `/omd` 即弹出候选）。启动一次会话，编排能力就位。
+> 两种触发方式：**自然语言**（30 个随 preset 打包的编排 skill，代理自动加载）+ **斜杠命令**（13 条，敲 `/omd` 即弹出候选）。启动一次会话，编排能力就位。
 
 [English](README.md) | 中文
 
 ## 快速开始
 
-一条命令装好全部 29 个 skill + 12 条 `/omd-*` 命令（等价 OMC 的插件市场安装）：
+一条命令装好全部 30 个 skill + 13 条 `/omd-*` 命令（等价 OMC 的插件市场安装）：
 
 ```sh
 dsh plugin --profile web add github:hawk2048/oh-my-dsh
@@ -36,7 +36,7 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 
 - **零配置**——一条 `dsh plugin add` 装好全部；bundle 自注册，无需安装向导。
 - **Team 优先编排**——Team 是标准分阶段流水线（`team-plan → team-prd → team-exec → team-verify → team-fix`），构建在 DSH 原生 `workflow` 上。
-- **自然语言交互**——说清需求即可，29 个 `omd-*` skill 自动加载，无需记命令。
+- **自然语言交互**——说清需求即可，30 个 `omd-*` skill 自动加载，无需记命令。
 - **自动并行**——复杂任务扇出到并行 `subagent`。
 - **持久执行**——Ralph / Autopilot / Ultragoal 不达验证完成不罢休（原生 `ralph` 循环 + `goal` 跨轮目标）。
 - **零运行时开销**——不引入新宿主工具或运行时，只是 DSH 原生原语之上的 skill，保留 DSH 自己的模型路由与沙箱。
@@ -84,6 +84,12 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 | wiki（知识库） | [`omd-wiki`](skills/omd-wiki/SKILL.md) | 工作区 markdown |
 | omc-help（使用指南） | [`omd-help`](skills/omd-help/SKILL.md) | 实时列 skill/命令索引 |
 
+**本插件新增（OMC 无对应）**：
+
+| 能力 | oh-my-dsh skill | DSH 原生载体 |
+|------|-----------------|--------------|
+| 金字塔结构化表达（结论先行 + MECE） | [`omd-pyramid`](skills/omd-pyramid/SKILL.md) | 纯表达纪律 + `dsh-ui` 层级映射（genui） |
+
 > **`ultrawork` 已退役**：OMC 在 5.0.0 删除了 `ultrawork`（以及 `ultraqa`/`swarm`/`pipeline` 等），oh-my-dsh 同步移除；其"最大并行扇出"能力已并入 `execute`/`team`/`ralph` 的内部并行纪律。
 
 关键差异：OMC 的 HUD 是 CLI 状态栏，而 oh-my-dsh 的 HUD 是**内联在回答正文里的 `dsh-ui` 仪表盘**（stat/progress/timeline/table），因为 DSH 的 Web GUI 本身就在渲染结构化 UI。
@@ -114,6 +120,7 @@ oh-my-dsh/
 │   ├── omd-research/SKILL.md
 │   ├── omd-autoresearch/SKILL.md
 │   ├── omd-ultragoal/SKILL.md
+│   ├── omd-pyramid/SKILL.md
 │   ├── omd-tdd/SKILL.md
 │   ├── omd-deepsearch/SKILL.md
 │   ├── omd-deep-analyze/SKILL.md
@@ -140,7 +147,7 @@ oh-my-dsh/
 
 两种安装方式，**任选其一即可**（bundle 装全局、preset 按会话选）。
 
-**方式 A：组合包 bundle（主要，等价 OMC 的插件市场安装）** —— 全局装好 `/omd-*` 命令与 29 个 skill，profile 里所有会话可见：
+**方式 A：组合包 bundle（主要，等价 OMC 的插件市场安装）** —— 全局装好 13 条 `/omd-*` 命令与 30 个 skill，profile 里所有会话可见：
 
 ```sh
 # git 源码安装（纯 JS/Markdown，零构建，无需 allowBuilds 授权；用 @<tag> 可锁定版本）
@@ -160,6 +167,8 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 # macOS / Linux
 ./install.sh
 ```
+
+安装器**非破坏性**：不删除 preset 目录，你本地加的 skill 会保留，被覆盖的本地改动会先备份成 `<name>.bak-<时间戳>`。重复运行安全可逆。
 
 然后在 DSH 里**新建会话时选择 "oh-my-dsh 编排"** preset（或把它设为 `agent-presets.default`）。详见 [docs/RELEASE.md](docs/RELEASE.md)。
 
@@ -181,6 +190,7 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 - `调研一下 X 的最佳实践，要带来源` → `omd-research`
 - `autoresearch：把这份报告打磨到达标` → `omd-autoresearch`
 - `ultragoal：这个长期目标拆成子目标推进` → `omd-ultragoal`
+- `把这段整理成金字塔结构 / 结论先行 / MECE` → `omd-pyramid`
 - `tdd：先写失败测试再实现` → `omd-tdd`
 - `deepsearch：定位谁调用了这个函数` → `omd-deepsearch`
 - `deep-analyze：深度分析一下这块架构` → `omd-deep-analyze`
@@ -214,6 +224,7 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 | `/omd-research <问题>` | `omd-research` |
 | `/omd-autoresearch <任务>` | `omd-autoresearch` |
 | `/omd-ultragoal <目标>` | `omd-ultragoal` |
+| `/omd-pyramid <内容>` | `omd-pyramid` |
 
 代理会加载对应的 skill，按该模式编排，并用 HUD 实时汇报进度。
 

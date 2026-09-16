@@ -10,7 +10,7 @@ DSH 的能力 = `cordis.yml` 里的插件行。两个平面：
 oh-my-dsh **不发布任何服务**，也不引入宿主运行时。它只做两件事：
 
 1. **persona**（`dsh-persona` 行）告诉代理存在这套编排词汇；
-2. **skill 打包**（`skill-filesystem` 行的 `customSkillDirs`）把 29 个 `omd-*` skill 挂进该 preset 的 skill 目录层。
+2. **skill 打包**（`skill-filesystem` 行的 `customSkillDirs`）把 30 个 `omd-*` skill 挂进该 preset 的 skill 目录层。
 
 所以整件事是一个 agent preset，而不是宿主改动或动态插件。这是它"零运行时风险"的根本原因。
 
@@ -46,6 +46,7 @@ oh-my-dsh **不发布任何服务**，也不引入宿主运行时。它只做两
 | Research | `web_search`/`web_fetch` + 并行 `subagent` | 每条结论带来源，可交叉验证 |
 | Autoresearch | `goal` + 评估子代理循环 | 评估驱动、有界改进、达标退出 |
 | Ultragoal | `goal` + `todo_write` + checkpoint 工件 | 多子目标 + 台账，跨轮跨会话可恢复 |
+| Pyramid | 纯纪律 + `dsh-ui` 围栏（genui） | 结论先行 / MECE 分组 / 层层支撑的表达结构 |
 | TDD | `pwsh`/`bash` 测试 + `todo_write` | red-green-refactor 由真实命令驱动 |
 | Deepsearch | `grep`/`glob`/`read` | 代码库问题本地定位，证据带 file:line |
 | Deep-analyze | 并行 `subagent` 多视角 | 架构/安全/性能分开看，显式权衡 |
@@ -74,9 +75,9 @@ OMC 的 HUD 是 CLI 状态栏。DSH 是 Web GUI，且已有 `genui` skill 渲染
 
 ## 斜杠命令如何随 preset 打包
 
-`/omd-plan` `/omd-execute` `/omd-review` `/omd-verify` `/omd-team` `/omd-autopilot` `/omd-ralph` `/omd-deep-interview` `/omd-ralplan` `/omd-research` `/omd-autoresearch` `/omd-ultragoal` 由 `commands/omd-commands.mjs` 提供，是一个随 preset 打包的 ESM 插件：
+`/omd-plan` `/omd-execute` `/omd-review` `/omd-verify` `/omd-team` `/omd-autopilot` `/omd-ralph` `/omd-deep-interview` `/omd-ralplan` `/omd-research` `/omd-autoresearch` `/omd-ultragoal` `/omd-pyramid` 由 `commands/omd-commands.mjs` 提供，是一个随 preset 打包的 ESM 插件：
 
-这 12 条之外，其余 17 个 skill（`hud`、`tdd`、`deepsearch`、`deep-analyze`、`ultrathink`、`ai-slop-cleaner`、`doctor`、`debug`、`release`、`remember`、`cancel`、`minimal-code-discipline`、`external-context`、`visual-verdict`、`skillify`、`wiki`、`help`）是**纯自然语言触发的 skill**（无斜杠命令），靠 skill 的 `description` 写清触发词，由模型自动加载。
+这 13 条之外，其余 17 个 skill（`hud`、`tdd`、`deepsearch`、`deep-analyze`、`ultrathink`、`ai-slop-cleaner`、`doctor`、`debug`、`release`、`remember`、`cancel`、`minimal-code-discipline`、`external-context`、`visual-verdict`、`skillify`、`wiki`、`help`）是**纯自然语言触发的 skill**（无斜杠命令），靠 skill 的 `description` 写清触发词，由模型自动加载。
 
 - 组合里用**相对路径**引用：`name: './commands/omd-commands.mjs'`。Loader 的 `classifyRowSpecifier` 把 `.` 前缀归类为 `preset`，按 preset 自身目录（`baseUrl`）解析——所以命令生产者随 preset 走，装到哪都找得到。
 - 插件 `inject: ['commands']`，复用 DSH 自带的命令注册表（与内置 `/goal` 的 `command-goal` 同一机制），**不引入新服务**。
@@ -96,5 +97,5 @@ OMC 的 HUD 是 CLI 状态栏。DSH 是 Web GUI，且已有 `genui` skill 渲染
 |------|----------|-----------|
 | `persona` 文本 | 一行身份 | 身份 + 编排词汇说明 |
 | `skill-filesystem` | 无 config（默认本地发现） | `customSkillDirs` 指向 preset 的 `skills/` |
-| `command-omd` | （不存在） | 相对路径挂载 `./commands/omd-commands.mjs`，注册 12 条斜杠命令 |
+| `command-omd` | （不存在） | 相对路径挂载 `./commands/omd-commands.mjs`，注册 13 条斜杠命令 |
 | 其余全部行 | — | **逐字节一致** |

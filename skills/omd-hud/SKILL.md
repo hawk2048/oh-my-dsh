@@ -1,6 +1,6 @@
 ---
 name: omd-hud
-description: "HUD：把编排进度渲染成内联 dsh-ui 仪表盘——统计卡片、进度条、时间线与子代理状态表。用于实时展示任意 oh-my-dsh 模式的进度（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/tdd/deepsearch/deep-analyze/ultrathink/ai-slop-cleaner/debug/release/remember/cancel/minimal-code-discipline/external-context/visual-verdict/skillify/wiki/help/doctor）。"
+description: "HUD：把编排进度渲染成内联 dsh-ui 仪表盘——统计卡片、进度条、时间线与子代理状态表。用于实时展示任意 oh-my-dsh 模式的进度（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/pyramid/tdd/deepsearch/deep-analyze/ultrathink/ai-slop-cleaner/debug/release/remember/cancel/minimal-code-discipline/external-context/visual-verdict/skillify/wiki/help/doctor）。"
 ---
 
 # oh-my-dsh · HUD 实时进度仪表盘
@@ -45,6 +45,7 @@ description: "HUD：把编排进度渲染成内联 dsh-ui 仪表盘——统计�
 | Research | `table`（结论/证据/来源）+ `stat`（来源计数） |
 | Autoresearch | `stat`（轮次/评分）+ `table`（差距清单） |
 | Ultragoal | `table`（子目标→状态/checkpoint）+ `progress` |
+| Pyramid | `stat`（结论位置/要点数/MECE 缺口）+ `table`（层→原状/改后）+ `callout`（下一步） |
 | TDD | `steps`（红绿重构）+ `table`（用例→状态） |
 | Deepsearch | `table`（符号/文件/行号/角色） |
 | Deep-analyze | `table`（视角/发现）+ `table`（方案权衡） |

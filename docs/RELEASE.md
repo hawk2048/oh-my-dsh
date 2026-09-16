@@ -56,7 +56,7 @@ dsh plugin --profile web add github:hawk2048/oh-my-dsh
 dsh plugin --profile web add @hawk2048/oh-my-dsh
 ```
 
-装完后重启 profile，`/omd-*` 命令与 29 个 skill 即全局可用。
+装完后重启 profile，13 条 `/omd-*` 命令与 30 个 skill 即全局可用。
 
 **agent preset（可选，按会话选择，含 persona 与编排工具集）：**
 
@@ -66,6 +66,10 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 # macOS / Linux
 ./install.sh
 ```
+
+安装器是**非破坏性**的：它从不删除 preset 目录。你自己加的东西（例如本地写的 skill）升级后仍在；
+若某个随仓库发布的文件会覆盖你本地改过的同名文件（例如 `agent.cordis.yml` 里加了本地配置），
+会先备份成 `<name>.bak-<时间戳>` 再覆盖。重复运行安全可逆。脚本结束时会列出「保留了哪些不随仓库发布的文件」。
 
 或直接解压到 `$DSH_HOME/.agent-presets/oh-my-dsh/`。新建会话后在 preset 选择器里选「oh-my-dsh 编排」。
 
