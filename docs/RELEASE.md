@@ -23,6 +23,9 @@ OMC 的安装只有两条路，**都不涉及「下载压缩包」**：
 ## 本地验证（每次发布前）
 
 ```sh
+# 0. 安装脚本的回归测试（非破坏性安装契约：不删 preset 目录、保留本地文件、覆盖前备份）
+pnpm test
+
 # 1. 语法自检命令模块
 node --check commands/omd-commands.mjs
 

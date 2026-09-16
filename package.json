@@ -8,6 +8,9 @@
     ".": "./index.js",
     "./commands": "./commands/omd-commands.mjs"
   },
+  "scripts": {
+    "test": "sh tests/install.test.sh"
+  },
   "files": [
     "index.js",
     "commands/",
