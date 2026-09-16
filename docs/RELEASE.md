@@ -42,6 +42,12 @@ dsh plugin --profile omdtest remove @hawk2048/oh-my-dsh
    git push origin v0.1.0
    ```
 2. 发布到 npm：`pnpm publish --access public` —— 等价 OMC 的 `npm i -g oh-my-claude-sisyphus`，装的是 `dsh plugin add @hawk2048/oh-my-dsh`。
+   **注意 registry**：若本机 `npm config get registry` 指向 `https://registry.npmmirror.com`（国内只读镜像），
+   直接 `publish` 会打到镜像上并失败。发布必须显式指定官方源，且先登录：
+   ```sh
+   npm whoami --registry https://registry.npmjs.org   # 需先 npm login --registry https://registry.npmjs.org
+   npm publish --access public --registry https://registry.npmjs.org
+   ```
 3. （可选）在 GitHub Release 挂 `pnpm pack` 出的 `.tgz`，仅供离线/内网分发；不是必需，也不是默认安装方式。
 
 ## 安装方式（写进 README 与 release 说明）
