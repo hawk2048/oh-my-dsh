@@ -47,13 +47,37 @@ function Backup-IfDiffers {
 
 foreach ($rel in $shipped) { Backup-IfDiffers -Rel $rel }
 
-# Merge-copy: Copy-Item adds/overwrites the files we ship and touches nothing else.
+# Merge-copy: add/overwrite the files this repo ships and touch nothing else.
 Copy-Item (Join-Path $src 'agent.cordis.yml') $dst -Force
 Copy-Item (Join-Path $src 'preset.yml') $dst -Force
-Copy-Item (Join-Path $src 'skills') (Join-Path $dst 'skills') -Recurse -Force
-Copy-Item (Join-Path $src 'commands') (Join-Path $dst 'commands') -Recurse -Force
+
+# Copy the CONTENTS of skills/ and commands/, never those directories themselves.
+# `Copy-Item <src>\skills <dst>\skills -Recurse` into a directory that already
+# exists copies the whole tree INSIDE it, producing <dst>\skills\skills and
+# leaving the real skill files at their old version -- an upgrade that reports
+# success while shipping nothing. Enumerate the children and copy those.
+foreach ($d in @('skills', 'commands')) {
+  $srcDir = Join-Path $src $d
+  if (-not (Test-Path $srcDir -PathType Container)) { continue }
+  $dstDir = Join-Path $dst $d
+  New-Item -ItemType Directory -Force -Path $dstDir | Out-Null
+  $children = Get-ChildItem -Path $srcDir -Force
+  if ($children) {
+    Copy-Item -Path $children.FullName -Destination $dstDir -Recurse -Force
+  }
+}
 
 Write-Host "installed oh-my-dsh preset to $dst"
+
+# Report -- never delete -- a duplicate tree that an older version of this script
+# nested. Those files are not what the preset loads, so they are dead weight.
+foreach ($d in @('skills', 'commands')) {
+  $nested = Join-Path $dst (Join-Path $d $d)
+  if (Test-Path $nested -PathType Container) {
+    Write-Host "  WARNING duplicate tree from an older installer: $nested"
+    Write-Host "          nothing loads it; delete it after you have checked it."
+  }
+}
 
 # Report what the upgrade left alone, so nothing local disappears silently.
 $installed = Get-ChildItem -Path $dst -Recurse -File |

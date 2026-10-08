@@ -38,11 +38,28 @@ for d in skills commands; do
   done
 done
 
-# Merge-copy: cp -R adds/overwrites the files we ship and touches nothing else.
+# Merge-copy: add/overwrite the files this repo ships and touch nothing else.
 cp "$SRC/agent.cordis.yml" "$SRC/preset.yml" "$DST/"
-cp -R "$SRC/skills" "$SRC/commands" "$DST/"
+
+# Copy the CONTENTS of skills/ and commands/ (note the trailing `/.`), so the
+# copy merges into the existing directory on every re-run instead of depending
+# on how this machine's cp treats an already-existing destination directory.
+for d in skills commands; do
+  [ -d "$SRC/$d" ] || continue
+  mkdir -p "$DST/$d"
+  cp -R "$SRC/$d/." "$DST/$d/"
+done
 
 echo "installed oh-my-dsh preset to $DST"
+
+# Report -- never delete -- a duplicate tree that the PowerShell installer of an
+# older version nested. Nothing loads those files.
+for d in skills commands; do
+  if [ -d "$DST/$d/$d" ]; then
+    echo "  WARNING duplicate tree from an older installer: $DST/$d/$d"
+    echo "          nothing loads it; delete it after you have checked it."
+  fi
+done
 
 # Report what the upgrade left alone, so nothing local disappears silently.
 LIST_DIR="$(mktemp -d)"
