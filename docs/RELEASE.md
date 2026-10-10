@@ -34,6 +34,8 @@ node --check commands/omd-commands.mjs
 pnpm pack
 dsh plugin --profile omdtest add ./oh-my-dsh-<version>.tgz
 dsh --profile omdtest --dump-config   # 应看到 command-omd 与 skill-filesystem(customSkillDirs)
+#    之后：确认 bundle 的 skill 根真的存在（不存在也不报错，只会静默扫到 0 个）
+node tests/skill-path.test.mjs
 dsh --profile omdtest                 # 应能启动、无 duplicate / provider 冲突
 dsh plugin --profile omdtest remove @hawk2048/oh-my-dsh
 ```

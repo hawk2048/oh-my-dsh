@@ -9,6 +9,16 @@
 #   ships the base row disabled because presets own local discovery). Overriding
 #   by id keeps a single "filesystem" provider; customSkillDirs is additive over
 #   the default roots, so project and user skills keep working alongside omd's.
+#
+# Where the skills live: resolve them FROM THE PACKAGE, never relative to
+# `baseUrl`. DeepSeek Harness anchors `baseUrl` at the PROFILE directory (the
+# include root of the composed config), not at the directory of the bundle that
+# contributed a patch row -- so `new URL('skills/', baseUrl)` points at
+# `<profile>/skills`, which does not exist. A missing skill root fails silently:
+# the scanner finds zero skills, the catalog lists no `omd-*`, and no error is
+# raised. `baseUrl` below is therefore only an input to node's module resolver
+# (a place to start looking for the package), not a directory we read assets from.
+# This is the same shape DSH uses for this very field in its own preset patch.
 - insert:
     - id: command-omd
       name: '@hawk2048/oh-my-dsh/commands'
@@ -17,4 +27,8 @@
   disabled: false
   config:
     customSkillDirs:
-      - !!js "process.getBuiltinModule('node:url').fileURLToPath(new URL('skills/', baseUrl))"
+      # require.resolve of the BARE specifier: the "." export in package.json maps
+      # it to index.js, so dirname() is the package root. Do not resolve
+      # '<name>/package.json' -- it is not in "exports", so it throws
+      # ERR_PACKAGE_PATH_NOT_EXPORTED.
+      - !!js "process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('@hawk2048/oh-my-dsh')), 'skills')"

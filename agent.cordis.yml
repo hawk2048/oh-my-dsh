@@ -100,6 +100,12 @@
 # directory (`baseUrl` is the preset's directory, so the root follows the
 # install). `tool-skill` gives the catalog and loader; the merged catalog also
 # carries whatever the deployment registered globally (repository plugins).
+#
+# Do NOT copy this row into cordis.patch.yml. In a BUNDLE patch `baseUrl` is the
+# PROFILE directory, not this directory, so the very same expression resolves to
+# a path that does not exist and the skills load as zero without any error. The
+# bundle row locates the package with createRequire() instead -- see
+# cordis.patch.yml and tests/skill-path.test.mjs.
 - id: skill-filesystem
   name: '@deepseek-ai/dsh-skill-filesystem'
   config:
