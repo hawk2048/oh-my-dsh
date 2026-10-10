@@ -159,6 +159,61 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 
 Restart the profile. One command, pulled by pnpm — no manual tarball download.
 
+### Check that the bundle actually took
+
+Two things must be true after a restart. Both are cheap to verify, and a silent
+failure here is invisible otherwise (a missing skill root is not an error -- the
+scanner just finds nothing).
+
+```sh
+# 1. the patch layer reached the composition
+dsh --profile web --dump-config | grep -B2 -A6 'id: skill-filesystem'
+```
+
+The host row must come back **enabled** and carrying your layer -- the header
+comment above it should name this package:
+
+```
+# == @deepseek-ai/dsh-base, patched by @deepseek-ai/dsh-web-app, @hawk2048/oh-my-dsh
+- id: skill-filesystem
+  name: '@deepseek-ai/dsh-skill-filesystem'
+  disabled: false
+  config:
+    customSkillDirs:
+      - !!js "process.getBuiltinModule('node:path').join(...)"
+```
+
+`disabled: false` and `customSkillDirs` present = the override landed. If the row
+is missing, or still says `disabled: true`, the bundle was not listed by the profile.
+
+```sh
+# 2. the directory that expression evaluates to really exists, and holds the skills
+```
+
+Evaluate it once and look at the result -- `<profile>` is your profile directory
+(`~/.dsh/profiles/<name>`, or the packaged app's equivalent):
+
+```sh
+node -e "
+const p = process.getBuiltinModule('node:path'), m = process.getBuiltinModule('node:module')
+const anchor = require('node:url').pathToFileURL(process.argv[1] + '/').href
+const dir = p.join(p.dirname(m.createRequire(anchor).resolve('@hawk2048/oh-my-dsh')), 'skills')
+console.log(dir)
+console.log('exists:', require('node:fs').existsSync(dir))
+" ~/.dsh/profiles/web
+```
+
+It must print a path **inside the installed package** that exists and contains
+one directory per `omd-*` skill -- not `<profile>/skills`. Then confirm the
+catalog: start a session and ask for `self-check the install` (`omd-doctor`), or
+just check that `/omd-help` and the `omd-*` skills show up.
+
+> **Why this is worth checking.** `customSkillDirs` is a path the harness computes
+> at boot, and a path that does not exist is skipped without a warning. An earlier
+> version of this file derived it from `baseUrl`, which the harness anchors at the
+> **profile** directory -- so the skills were shipped, installed, and never loaded.
+> `tests/skill-path.test.mjs` now pins the resolution, so it cannot regress.
+
 **Form B: agent preset (optional, per-session)** — full session with persona and the orchestration toolkit:
 
 ```sh

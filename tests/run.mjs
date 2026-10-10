@@ -7,6 +7,9 @@
 // shell that works, runs the Windows guard when a PowerShell exists, and says
 // so when a guard is skipped.
 //
+//   tests/skill-path.test.mjs bundle skill-root guard: the customSkillDirs
+//                            expression in cordis.patch.yml must resolve to the
+//                            INSTALLED package, not to a path relative to baseUrl
 //   tests/install.test.sh    portable (sh) guard for install.sh
 //   tests/install.test.ps1   Windows guard for install.ps1, where the nesting
 //                            bug lived: `Copy-Item <src>\skills <dst>\skills
@@ -85,5 +88,9 @@ for (const ps of psCandidates) {
 if (!ranWindowsGuard) {
   console.log('  skip  install.test.ps1 (no pwsh/powershell on this machine)');
 }
+
+// The bundle skill root is resolved at boot by the host, and a wrong path
+// fails silently -- so guard it here, where a plain node run is portable.
+run('skill-path.test.mjs', process.execPath, [join(here, 'skill-path.test.mjs')], repoRoot);
 
 process.exit(failed ? 1 : 0);

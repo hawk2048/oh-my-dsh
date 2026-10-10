@@ -30,6 +30,33 @@ oh-my-dsh **不发布任何服务**，也不引入宿主运行时。它只做两
 - 这与 DSH 自带 `cordis` preset 打包 `editing-cordis-compositions` 的方式**完全一致**（已证明可用的模板）。
 - skill 注册表分层：该 preset 的 `skill-filesystem` 只往**本 preset 那一层**注册，无需 isolate realm；代理的合并目录仍包含部署全局注册的 skill（仓库插件）。
 
+## bundle 与 preset 的 `baseUrl` 不同：同一个表达式的两种命运
+
+上面那行属于 **preset**（`agent.cordis.yml`）。preset 是自己被加载的配置根文件，`baseUrl` 就是 preset 目录，所以 `new URL('skills/', baseUrl)` 正确指向 preset 自带的 `skills/`。
+
+**bundle（`cordis.patch.yml`）不是配置根**，它是被别的东西打进来的一层：宿主用 profile 目录下的根配置文件作为 include 入口（`lib/profile-boot-*.js` 里 prepareProfile 上方的注释："the Loader needs a real include root to anchor `baseUrl` at the profile directory"）。bundle 层里每行插件的 config 由**该行自己的 fiber 上下文**求值，那个上下文的 `baseUrl` 沿用树级载体（Include/Group）的 profile 目录。
+
+因此同一条表达式在两个平面的结果不同：
+
+| 平面 | `baseUrl` 指向 | `new URL('skills/', baseUrl)` |
+|------|----------------|-------------------------------|
+| preset（`agent.cordis.yml`） | preset 目录 | ✅ preset 的 `skills/` |
+| bundle（`cordis.patch.yml`） | **profile 目录** | ❌ `<profile>/skills`，不存在 |
+
+而缺失的 skill 根**不报错**：扫描器扫一个空目录，静默得到 0 个 skill，技能清单里没有任何 `omd-*`。所以 bundle 那一行必须**从包自身出发**定位目录，而不是相对配置文件：
+
+```yaml
+# bundle 里的写法：createRequire 只把 profile 当「查找锚点」
+- !!js "process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('@hawk2048/oh-my-dsh')), 'skills')"
+```
+
+- `createRequire(baseUrl)` 的入参只是 node 解析器的**起点**，不是我们读取资源的目录；`require.resolve` 才会回答包真正装在哪，pnpm 的 `node_modules/.pnpm` 布局也一样能解析到。
+- 必须 resolve **裸包名**（`"."` 导出 → `index.js`），不能 resolve `<name>/package.json`：`exports` 没暴露它，会抛 `ERR_PACKAGE_PATH_NOT_EXPORTED`。
+- 这与 DSH 自己在 preset 补丁里对同一个 `customSkillDirs` 字段的写法一致。
+- `tests/skill-path.test.mjs` 钉住这条解析（用一个假的 profile 安装目录真跑求值），旧写法一回来就红。
+
+求值作用域（`cordis-plugin-loader/src/config/utils.ts`）：`new Function('ctx','expr', 'with (ctx) { return eval(expr) }')`。所以 `!!js` 里能直接写 `baseUrl`、`ctx`、`ctx.get('...')` 与 `process`（全局对象）——但**没有** `import.meta.url`：那要真插件模块才拿得到。
+
 ## 编排模式 → 原生原语映射
 
 | omd 模式 | 原语 | 为什么这个原语 |

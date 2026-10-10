@@ -159,6 +159,49 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 
 装完重启 profile 即可。用户全程只敲一条命令，由 pnpm 拉取，**不手动下载压缩包**。
 
+### 装完后确认 bundle 真的生效了
+
+重启后两件事都要成立。它们查起来很便宜，而这里的静默失败其实看不见——**技能目录不存在不会报错**，扫描器只是什么都找不到。
+
+```sh
+# 1. 确认补丁层进入了组合
+dsh --profile web --dump-config | grep -B2 -A6 'id: skill-filesystem'
+```
+
+宿主那一行必须是**已启用**的，且上方的来源注释要写着本包名：
+
+```text
+# == @deepseek-ai/dsh-base, patched by @deepseek-ai/dsh-web-app, @hawk2048/oh-my-dsh
+- id: skill-filesystem
+  name: '@deepseek-ai/dsh-skill-filesystem'
+  disabled: false
+  config:
+    customSkillDirs:
+      - !!js "process.getBuiltinModule('node:path').join(...)"
+```
+
+看到 `disabled: false` 与 `customSkillDirs` = 覆盖生效了。如果这一行缺失或仍是 `disabled: true`，说明 profile 没有列上这个 bundle。
+
+```sh
+# 2. 确认那个表达式算出来的目录真的存在
+```
+
+算一次就能看见结果（`<profile>` 是你的 profile 目录，即 `~/.dsh/profiles/<name>`，打包版用它的对应目录）：
+
+```sh
+node -e "
+const p = process.getBuiltinModule('node:path'), m = process.getBuiltinModule('node:module')
+const anchor = require('node:url').pathToFileURL(process.argv[1] + '/').href
+const dir = p.join(p.dirname(m.createRequire(anchor).resolve('@hawk2048/oh-my-dsh')), 'skills')
+console.log(dir)
+console.log('exists:', require('node:fs').existsSync(dir))
+" ~/.dsh/profiles/web
+```
+
+它打印的路径必须在**已安装的包内部**、真实存在，并且每个 `omd-*` skill 对应一个子目录——不能是 `<profile>/skills`。最后确认目录：新开会话说 `self-check the install`（`omd-doctor`），或直接看 `/omd-help` 与 `omd-*` skill 是否出现。
+
+> **为什么值得查这一次。** `customSkillDirs` 是宿主在启动时算出来的路径，而不存在的路径会被静静跳过。更早的版本把它挂在 `baseUrl` 上，而宿主把 `baseUrl` 锚在 **profile 目录**——结果 skill 打包了、安装了，却从未被加载。现在 `tests/skill-path.test.mjs` 把这条解析钉住了，不会再静静回归。
+
 **方式 B：agent preset（可选，按会话选择）** —— 含 persona 与编排工具集的全量会话：
 
 ```sh
