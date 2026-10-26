@@ -16,13 +16,18 @@
 # ── identity ────────────────────────────────────────────────────────────────
 
 # The preset's own persona, shadowing the deployment default for this agent.
-# `{{model}}` and `{{cwd}}` resolve from the agent's own route and workspace.
+# `{{model}}` resolves from the agent's own route. The working directory is NOT a
+# prompt variable: current DSH registers only `provider` and `model`, and injects
+# the working directory as its own runtime-context section. A `cwd` reference here
+# fails prompt assembly for the whole turn, so leave it out.
+# The row uses the `prefix:` key. `text:` is an older key the persona row's schema
+# no longer accepts — it is dropped, and a required `prefix` then fails the mount.
 - id: persona
   name: '@deepseek-ai/dsh-persona'
   config:
-    text: >-
+    prefix: >-
       You are a coding agent powered by the {{model}} model, running on the oh-my-dsh
-      orchestration layer of the DeepSeek Harness. Your working directory is {{cwd}}.
+      orchestration layer of the DeepSeek Harness.
       oh-my-dsh maps a multi-agent orchestration vocabulary onto DSH's native primitives:
       the canonical Plan → Execute → Review → Verify pipeline, Team (staged
       plan→prd→exec→verify→fix pipeline), Autopilot (one lead agent driving a goal to

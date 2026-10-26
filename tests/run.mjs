@@ -12,6 +12,12 @@
 //                            bug lived: `Copy-Item <src>\skills <dst>\skills
 //                            -Recurse` into an existing directory copies the
 //                            tree INSIDE it, so the real skills stayed stale.
+//   tests/preset-contract.test.mjs
+//                            dependency-free guard for agent.cordis.yml: the
+//                            persona row keeps the `prefix:` key its schema
+//                            requires, and references only registered prompt
+//                            variables (`provider`, `model`) -- a `cwd`
+//                            reference fails prompt assembly for every turn.
 //
 // Every child runs with stdio 'inherit' or 'ignore' on purpose: piped stdio is
 // blocked in a confined DSH sandbox.
@@ -42,6 +48,12 @@ function available(cmd, probeArgs) {
   const result = spawnSync(cmd, probeArgs, { stdio: 'ignore' });
   return !result.error && result.status === 0;
 }
+
+// Pure Node and no external shell, so it always runs: the shipped preset's
+// persona contract — only registered prompt variables, and the `prefix:` key the
+// persona row's schema requires. A `{{cwd}}` reference here (or a stale `text:`
+// key) makes every turn of that preset fail at prompt assembly.
+run('preset-contract.test.mjs', process.execPath, ['tests/preset-contract.test.mjs'], repoRoot);
 
 const shCandidates = isWindows
   ? [

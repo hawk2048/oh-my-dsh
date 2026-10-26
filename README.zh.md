@@ -238,7 +238,7 @@ DSH 的原生多智能体原语（`workflow` 的流水线/并行、`subagent` �
 
 - **加模式**：在 `skills/` 下新增 `omd-xxx/SKILL.md`（YAML frontmatter 写 `name` + `description`）。
 - **加命令**：在 `commands/omd-commands.mjs` 的 `MODES` 数组里追加一条。
-- **改 persona**：编辑 `agent.cordis.yml` 顶部的 `persona` 行。
+- **改 persona**：编辑 `agent.cordis.yml` 顶部的 `persona` 行。保留该行 schema 要求的 `prefix:` 键，并且只引用已注册的提示变量——目前是 `{{provider}}` / `{{model}}`。工作目录现在作为独立的 runtime-context 段注入，写 `{{cwd}}` 会让该预设的每一轮 prompt 组装失败（回归守卫：`tests/preset-contract.test.mjs`）。
 - **把 skill 做成全局**：走 bundle（`dsh plugin add`），见上文方式 A；或把 `skills/*` 复制到 `${DSH_HOME}/skills/`。
 
 ## 许可

@@ -238,7 +238,7 @@ Distribution reuses DSH's native mechanisms: `cordis.patch.yml` + the `dsh.bundl
 
 - **Add a mode**: add `skills/omd-xxx/SKILL.md` (YAML frontmatter with `name` + `description`).
 - **Add a command**: append an entry to the `MODES` array in `commands/omd-commands.mjs`.
-- **Change the persona**: edit the `persona` row at the top of `agent.cordis.yml`.
+- **Change the persona**: edit the `persona` row at the top of `agent.cordis.yml`. Keep the `prefix:` key the row's schema requires, and reference only registered prompt variables — `{{provider}}` / `{{model}}` today. The working directory is injected as its own runtime-context section, so a `{{cwd}}` reference fails prompt assembly for every turn (guard: `tests/preset-contract.test.mjs`).
 - **Make a skill global**: use the bundle (`dsh plugin add`) or copy `skills/*` to `${DSH_HOME}/skills/`.
 
 ## License
