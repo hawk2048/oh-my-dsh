@@ -59,7 +59,7 @@ Aligned to OMC **v5.3.0** (the `plan → execute → review → verify` pipeline
 | Deep Interview | [`omd-deep-interview`](skills/omd-deep-interview/SKILL.md) | `ask_user_question` |
 | Ralplan | [`omd-ralplan`](skills/omd-ralplan/SKILL.md) | parallel `subagent` drafts + arbitration |
 | Research | [`omd-research`](skills/omd-research/SKILL.md) | `web_search`/`web_fetch` + parallel `subagent` |
-| Autoresearch | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + evaluator loop |
+| Autoresearch | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + evaluator loop + writing checker (`references/report_lint.py`) |
 | Ultragoal | [`omd-ultragoal`](skills/omd-ultragoal/SKILL.md) | `goal` + `todo_write` + checkpoint artifacts |
 | HUD | [`omd-hud`](skills/omd-hud/SKILL.md) | inline `dsh-ui` dashboard (genui) |
 

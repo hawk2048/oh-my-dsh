@@ -59,7 +59,7 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 | Deep Interview（需求澄清） | [`omd-deep-interview`](skills/omd-deep-interview/SKILL.md) | `ask_user_question` |
 | Ralplan（共识规划） | [`omd-ralplan`](skills/omd-ralplan/SKILL.md) | 并行 `subagent` 草案 + 仲裁收敛 |
 | Research（有据调研） | [`omd-research`](skills/omd-research/SKILL.md) | `web_search`/`web_fetch` + 并行 `subagent` |
-| Autoresearch（评估驱动改进） | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + 评估子代理循环 |
+| Autoresearch（评估驱动改进） | [`omd-autoresearch`](skills/omd-autoresearch/SKILL.md) | `goal` + 评估子代理循环 + 写作检查脚本（`references/report_lint.py`） |
 | Ultragoal（持久多目标） | [`omd-ultragoal`](skills/omd-ultragoal/SKILL.md) | `goal` + `todo_write` + checkpoint 工件 |
 | HUD（状态栏） | [`omd-hud`](skills/omd-hud/SKILL.md) | `dsh-ui` 内联仪表盘（genui） |
 
