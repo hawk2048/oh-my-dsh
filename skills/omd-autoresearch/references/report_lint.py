@@ -63,8 +63,9 @@ JUDGE_BANNED = {
 
 # 工程词外泄：工具输出与流程内部词，不该出现在给读者看的正文里。
 # 判定分两档——纯行话直接判死，权衡用词只提示（对外报告可换，内部文档随意）。
-TOOL_LEAK_JUDGE = [r"报警项", r"判死", r"判负", r"落盘", r"跑通", r"卡闸", r"fail\s*掉", r"打了个补丁"]
-TOOL_LEAK_WARN = [r"闸门", r"拆轮", r"打标", r"跑一遍", r"收口"]
+TOOL_LEAK_JUDGE = [r"报警项", r"判死", r"判负", r"落盘", r"跑通", r"卡闸", r"fail\s*掉", r"打了个补丁",
+                   r"机器判", r"人判", r"判据", r"口径", r"档位", r"编号制", r"自检"]
+TOOL_LEAK_WARN = [r"闸门", r"拆轮", r"打标", r"跑一遍", r"收口", r"字段", r"条目"]
 
 # 比喻与借代：拿别的东西指代报告里的概念。对外报告里直接说做了什么。
 # 机器判比喻并不可靠，这里只收高频、且几乎不会作字面用的几个，命中只提示。
@@ -174,6 +175,14 @@ def is_quoted_pattern(text: str, start: int, end: int) -> bool:
     return False
 
 
+def is_factual_correction(frag: str) -> bool:
+    """两侧都带数字的「不是 X，而是 Y」是在更正数据，不是拔高句式。
+
+    例：「不是 12GWh，而是 18GWh」应当放行；「不是技术升级，而是重构」应当拦下。
+    """
+    return len(re.findall(r"\d", frag)) >= 2
+
+
 def find_dual_spans(text: str):
     """找出所有对偶转折句，并按字符区间合并重叠命中。
 
@@ -187,6 +196,8 @@ def find_dual_spans(text: str):
             if struck_out(text, m.start(), m.end()):
                 continue
             if is_quoted_pattern(text, m.start(), m.end()):
+                continue
+            if is_factual_correction(m.group(0)):
                 continue
             spans.append((m.start(), m.end(), m.group(0)[:26]))
     spans.sort(key=lambda x: (x[0], -x[1]))
@@ -280,7 +291,16 @@ def main() -> int:
 
     # ---- 工程词外泄（--doc 模式跳过：规则文档本来就要讨论这些词）
     if not args.doc:
-        leaks = [m.group(0) for p in TOOL_LEAK_JUDGE for m in re.finditer(p, text)]
+        def leaks_of(pats):
+            hits = []
+            for p in pats:
+                for m in re.finditer(p, text):
+                    if is_quoted_pattern(text, m.start(), m.end()):
+                        continue  # 引用他人的原话不改写
+                    hits.append(m.group(0))
+            return hits
+
+        leaks = leaks_of(TOOL_LEAK_JUDGE)
         if leaks:
             fails.append({
                 "rule": "工程词外泄",
@@ -289,7 +309,7 @@ def main() -> int:
                 "fix": "换成读者词：报警项→需要留意的地方，判死→不合格，落盘→存成文件，"
                        "跑通→验证通过。术语只在讨论工具本身时出现。",
             })
-        soft = [m.group(0) for p in TOOL_LEAK_WARN for m in re.finditer(p, text)]
+        soft = leaks_of(TOOL_LEAK_WARN)
         if soft:
             warns.append({"rule": "工程味偏重", "value": f"{len(soft)} 处",
                           "samples": soft[:4],
@@ -396,8 +416,19 @@ def main() -> int:
     metrics["破折号峰值/段"] = max(dash_by_para) if dash_by_para else 0
     metrics["加粗/千字"] = round(len(re.findall(r"\*\*[^*]+\*\*", text)) * per1000, 2)
     metrics["AI腔/千字"] = round(tic_total * per1000, 2)
-    metrics["数字/千字"] = round(len(NUM.findall(text)) * per1000, 2)
-    visuals = sum(1 for line in raw.splitlines() if VISUAL_LINE.match(line))
+    # 引用编号（[S07]）里的数字不算数据，否则一份通篇回指编号的稿子会轻易过数字密度
+    text_for_numbers = re.sub(r"\[S\d+\]", " ", text)
+    metrics["数字/千字"] = round(len(NUM.findall(text_for_numbers)) * per1000, 2)
+    # 表格与列表按「块」计：一张六行表算一处，一组列表算一处
+    visuals, prev_kind = 0, None
+    for line in raw.splitlines():
+        m = VISUAL_LINE.match(line)
+        kind = None
+        if m:
+            kind = "table" if line.lstrip().startswith("|") else "list"
+        if kind and kind != prev_kind:
+            visuals += 1
+        prev_kind = kind
     metrics["图表清单数"] = visuals
     metrics["图表/千字"] = round(visuals * per1000, 2)
 

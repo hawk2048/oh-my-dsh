@@ -9,7 +9,7 @@
 
 ### 1. huashu-report（花叔报告）· 已核
 
-`github.com/alchaincyf/huashu-report` · MIT · 482★ · 作者 alchaincyf
+`github.com/alchaincyf/huashu-report` · MIT · 484★（2026-11-04 复核）· 作者 alchaincyf
 规范取自 42 份顶级机构报告 PDF 的反向拆解（Stanford HAI、McKinsey、BCG、OpenAI、Anthropic、PwC、World Bank）。
 
 工作流：三问定原型 → 建数据表 → 写正文 → 补机制与文献定位 → 做图 → 逐页自检。
@@ -31,6 +31,8 @@
 `github.com/Asaceoo/deep-research-plus-skills` · MIT · 1★ · 作者 Asaceoo
 编排层，把 4 个调研子技能串成流水线。社区验证为零，机制可抄，别当权威。
 
+可执行面（复核补记）：`scripts/drp.py` 为 89.8 KB 的五阶段闸门，`validate_json.py` 两处，`tests/` 下 8 个 pytest 文件，`checklists/` 带通过样本。
+
 可迁移机制：
 
 - **闸门外置成脚本退出码**：`gate --stage outline|confirm|results|review|report`，0 通过 / 1 违规。
@@ -47,6 +49,9 @@
 同名/近名仓库另有 5 个以上（`hehe-industry-research-skill-pack` 315★、`PerryLink/dsh-industry-research` 215★、`luopan` 390★ 等），若指的是别的版本需回退确认。
 
 核心信条：**搜索结果只是线索，不是证据。**
+
+可执行面（复核补记）：`scripts/validate_report.py` 校验分档必需章节、引用数、置信度与工作区必需文件；另有 Go CLI 与其单元测试、`evals/evals.json`。
+
 
 可迁移机制：
 
