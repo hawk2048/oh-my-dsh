@@ -55,6 +55,21 @@ function available(cmd, probeArgs) {
 // key) makes every turn of that preset fail at prompt assembly.
 run('preset-contract.test.mjs', process.execPath, ['tests/preset-contract.test.mjs'], repoRoot);
 
+// The writing checker and the evidence checker ship with omd-autoresearch. Their
+// self test needs a python3 on PATH; when there is none this guard says so
+// instead of failing, matching how the shell guards behave below.
+const pythonCandidates = isWindows ? ['python', 'py'] : ['python3', 'python'];
+let ranPythonGuard = false;
+for (const py of pythonCandidates) {
+  if (!available(py, ['--version'])) continue;
+  run('references/selftest.py', py, ['skills/omd-autoresearch/references/selftest.py'], repoRoot);
+  ranPythonGuard = true;
+  break;
+}
+if (!ranPythonGuard) {
+  console.log('  skip  references/selftest.py (no python on this machine)');
+}
+
 const shCandidates = isWindows
   ? [
       'sh',
