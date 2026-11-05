@@ -34,31 +34,38 @@ HEAD_ALIASES = {
 VERIFIED = {"已开页", "已交叉", "已核", "verified", "checked"}
 
 
-def parse_table(text: str):
-    """取文件里第一张表（连续以 | 开头的行）。返回 (headers, rows)。
+def table_blocks(text: str):
+    """把文件里所有连续的表行切成块，每块是一组行。"""
+    blocks, cur = [], []
+    for ln in text.splitlines():
+        if ln.strip().startswith("|"):
+            cur.append(ln.strip())
+        elif cur:
+            blocks.append(cur)
+            cur = []
+    if cur:
+        blocks.append(cur)
+    return blocks
 
-    只取一张：文件后面可能还有别的表（比如机制登记），混进来会串行。
+
+def parse_table(text: str):
+    """找带「编号」表头的那张表。返回 (headers, rows)。
+
+    文件里常有别的表（特征表、对比表），按第一张取会读错表。
     """
-    lines = text.splitlines()
-    start = next((i for i, ln in enumerate(lines) if ln.strip().startswith("|")), None)
-    if start is None:
-        return [], []
-    block = []
-    for ln in lines[start:]:
-        if not ln.strip().startswith("|"):
-            break
-        block.append(ln.strip())
-    if not block:
-        return [], []
-    header = [c.strip() for c in block[0].strip("|").split("|")]
-    keys = [HEAD_ALIASES.get(h, h) for h in header]
-    body = []
-    for ln in block[1:]:
-        if re.fullmatch(r"\|[\s:\-|]+\|", ln):
+    for block in table_blocks(text):
+        header = [c.strip() for c in block[0].strip("|").split("|")]
+        keys = [HEAD_ALIASES.get(h, h) for h in header]
+        if "id" not in keys:
             continue
-        cells = [c.strip() for c in ln.strip("|").split("|")]
-        body.append(dict(zip(keys, cells)))
-    return keys, body
+        body = []
+        for ln in block[1:]:
+            if re.fullmatch(r"\|[\s:\-|]+\|", ln):
+                continue
+            cells = [c.strip() for c in ln.strip("|").split("|")]
+            body.append(dict(zip(keys, cells)))
+        return keys, body
+    return [], []
 
 
 def citations(text: str):
