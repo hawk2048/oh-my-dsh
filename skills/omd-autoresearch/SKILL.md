@@ -111,6 +111,7 @@ description: "自动调研改进：有界的评估器驱动改进循环——先
 
 - `omd-research` 单趟查证；本技能是多轮 + 闸门 + 达标线。
 - `omd-pyramid` 管结构（结论先行、MECE）；`references/report-style.md` 管字面；`report_lint.py` 管机械下限。
+- `omd-plain-writing` 管生成期的句式与结构；本技能管循环与检查，两者一起用。
 - `omd-ai-slop-cleaner` 是事后清理；本技能把清理放进写作过程，一节一清。
 - 外部报告类技能（huashu-report、industry-research、deep-research-plus 等）的机制吸收记录在 `references/skill-survey.md`。
 

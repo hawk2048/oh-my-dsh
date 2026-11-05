@@ -131,6 +131,14 @@ const MODES = [
     skill: 'omd-pyramid',
     build: (t) => `请加载 omd-pyramid skill，用金字塔原理（结论先行、以上统下、归类分组 MECE、逻辑递进，必要时 SCQA 开场）重组以下内容的表达，并用 HUD 输出结构对照：${t}`,
   },
+  {
+    name: 'omd-plain',
+    description: '说人话：按生成期纪律起草或重写，去掉对偶句、生造词、缩写与拔高腔',
+    hint: '<要写或要改的内容>',
+    label: '说人话',
+    skill: 'omd-plain-writing',
+    build: (t) => `请加载 omd-plain-writing skill，按它的生成期纪律处理以下内容（先定具体事实，再落笔，输出前过八条自查）：${t}`,
+  },
 ]
 
 export function apply(ctx) {

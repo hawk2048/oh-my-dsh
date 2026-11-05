@@ -72,6 +72,7 @@ dsh plugin --profile web add @hawk2048/oh-my-dsh
 | deep-analyze（深度分析） | [`omd-deep-analyze`](skills/omd-deep-analyze/SKILL.md) | 并行 `subagent` 多视角 |
 | ultrathink（深度推理） | [`omd-ultrathink`](skills/omd-ultrathink/SKILL.md) | 纯推理（先不动工具） |
 | ai-slop-cleaner（去废话） | [`omd-ai-slop-cleaner`](skills/omd-ai-slop-cleaner/SKILL.md) | `review`/`edit` 精简 |
+| 说人话（生成期写作纪律） | [`omd-plain-writing`](skills/omd-plain-writing/SKILL.md) | 句式与结构约束 + 输出前八条自查 |
 | omc-doctor（自检） | [`omd-doctor`](skills/omd-doctor/SKILL.md) | 安装/挂载诊断 |
 | debug（调试） | [`omd-debug`](skills/omd-debug/SKILL.md) | 复现→定位→最小修复→回归 |
 | release（发布） | [`omd-release`](skills/omd-release/SKILL.md) | git + 测试 + changelog + tag |

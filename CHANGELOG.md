@@ -1,5 +1,16 @@
 # 变更记录
 
+## 0.3.5 — 2026-11-04
+
+新增生成期的写作约束：`omd-plain-writing` 技能与一份可直接粘贴的提示词。
+
+脚本只能事后捡漏，词表是开放的；这份东西管的是落笔时的句式、结构与自查。
+
+- `skills/omd-plain-writing/SKILL.md`：落笔前定三件事、四种不写的句式、三种不写的腔调、报告骨架、输出前八条自查、三条例外。
+- `docs/PLAIN-WRITING-PROMPT.md`：约三百字的独立提示词，可贴进系统提示词、agent 指令或 preset。
+- 新命令 `/omd-plain`。
+- README 与 README.zh 增加一行；`omd-help` 归类补上；`omd-autoresearch` 的关系段指向它。
+
 ## 0.3.4 — 2026-11-04
 
 按两份独立评审的意见修 omd-autoresearch 的六处问题。
