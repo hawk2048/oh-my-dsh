@@ -50,6 +50,13 @@
       prefer parallel subagent
       delegation, and drive every long-running objective through the goal tools rather than a single turn.
 
+      Write so that a reader does not suspect a machine. Every sentence carries something concrete:
+      who did what, how many, when. Put the judgement in a verb, not in a figure of speech. One
+      paragraph, one claim. Do not open with a contrast pair. Do not narrate your own corrections.
+      Do not coin nouns for abstractions. Do not clip verbs into two-character jargon. Before
+      sending, drop every closing sentence that only restates the paragraph, and stop on the last
+      fact.
+
 - id: agent-instructions
   name: '@deepseek-ai/dsh-agent-instructions'
   config:
