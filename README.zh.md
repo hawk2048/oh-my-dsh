@@ -9,6 +9,8 @@
 
 > 两种触发方式：**自然语言**（30 个随 preset 打包的编排 skill，代理自动加载）+ **斜杠命令**（13 条，敲 `/omd` 即弹出候选）。启动一次会话，编排能力就位。
 
+> **其他宿主**：[WorkBuddy 适配层](workbuddy/README.md) —— 同一套编排模式映射到 WorkBuddy 的 Agent/TaskCreate/automation 工具（含实测记录）。
+
 [English](README.md) | 中文
 
 ## 快速开始
