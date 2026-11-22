@@ -15,9 +15,9 @@ description: "帮助：展示 oh-my-dsh 菜单——全部 omd-* 技能与 /omd-
 ## 展示纪律
 
 1. **列实时清单**：用 `glob` 列 `skills/*/SKILL.md`，读每个的 frontmatter `name` + `description` 首句，别凭记忆硬背——清单会随版本变。
-2. **分类呈现**：编排流水线（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal）/ 表达与推理纪律（pyramid/plain-writing/deep-analyze/ultrathink/ai-slop-cleaner）/ 工程纪律（tdd/deepsearch/debug/release/minimal-code-discipline）/ 工具 skill（remember/cancel/external-context/visual-verdict/skillify/wiki/doctor）/ HUD，每类给「技能名 + 一句话用途」。
-3. **命令面**：14 条 `/omd-*` 斜杠命令（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/pyramid/plain）。说明两者区别：**斜杠命令 = 直接进对应模式；自然语言 = 说清需求自动触发对应 skill**。
-4. **给入口**：按用户目标指路——「要规划」→ `omd-plan`，「多人拆任务」→ `omd-team`，「修 bug」→ `omd-debug`，「发版」→ `omd-release`，「讲不清楚/要写汇报」→ `omd-pyramid`。
+2. **分类呈现**：编排流水线（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/cancel/hud）/ 表达与推理纪律（pyramid/plain-writing/deep-analyze/ultrathink/ai-slop-cleaner/first-principles/contradictions/challenge）/ 工程纪律（tdd/deepsearch/debug/release/minimal-code-discipline/observe）/ 事后与留痕（postmortem/decision-record）/ 工具 skill（remember/external-context/visual-verdict/skillify/wiki/doctor/help），每类给「技能名 + 一句话用途」。
+3. **命令面**：20 条 `/omd-*` 斜杠命令（plan/execute/review/verify/team/autopilot/ralph/deep-interview/ralplan/research/autoresearch/ultragoal/pyramid/plain + first-principles/contradictions/challenge/postmortem/decision-record/observe）。说明两者区别：**斜杠命令 = 直接进对应模式；自然语言 = 说清需求自动触发对应 skill**。
+4. **给入口**：按用户目标指路——「要规划」→ `omd-plan`，「多人拆任务」→ `omd-team`，「修 bug」→ `omd-debug`，「发版」→ `omd-release`，「讲不清楚/要写汇报」→ `omd-pyramid`；「拆惯性/从事实重建」→ `omd-first-principles`，「问题太多先抓重点」→ `omd-contradictions`，「方案采纳前挑毛病」→ `omd-challenge`，「白干了要复盘」→ `omd-postmortem`，「记下为什么这么定」→ `omd-decision-record`，「查实际在跑什么」→ `omd-observe`。
 
 ## 与其它模式的关系
 

@@ -1,6 +1,8 @@
 // oh-my-dsh 斜杠命令生产者。
-// 注册 13 条人类命令：12 条编排命令（plan/execute/review/verify/team/autopilot/ralph/
-// deep-interview/ralplan/research/autoresearch/ultragoal）+ pyramid（金字塔结构化表达）表达纪律命令。
+// 注册 20 条人类命令：12 条编排命令（plan/execute/review/verify/team/autopilot/ralph/
+// deep-interview/ralplan/research/autoresearch/ultragoal）+ pyramid（金字塔结构化表达）+ plain（说人话）
+// 表达纪律命令 + 6 条思维纪律命令（first-principles/contradictions/challenge/postmortem/
+// decision-record/observe）。
 // 每条 handler 把任务作为一条用户消息提交给模型（唤醒模型并让它加载对应
 // omd-* skill），然后返回一条直接 UI 确认（不进入模型请求）。
 //
@@ -138,6 +140,54 @@ const MODES = [
     label: '说人话',
     skill: 'omd-plain-writing',
     build: (t) => `请加载 omd-plain-writing skill，按它的生成期纪律处理以下内容（先定具体事实，再落笔，输出前过八条自查）：${t}`,
+  },
+  {
+    name: 'omd-first-principles',
+    description: '第一性原理：还原到可验证事实，拆掉惯性假设从事实层重建',
+    hint: '<要还原的问题>',
+    label: '第一性原理',
+    skill: 'omd-first-principles',
+    build: (t) => `请加载 omd-first-principles skill，用第一性原理把以下问题还原到可验证的基本事实、拆掉惯性假设、从事实层重建方案（每条事实必须带来源，给不出来源的降级为假设），并用 HUD 输出事实表/假设证伪表/重建方案：${t}`,
+  },
+  {
+    name: 'omd-contradictions',
+    description: '抓主要矛盾：多个问题并存时用证据排主次，认领决定性的那一个',
+    hint: '<千头万绪的局面>',
+    label: '抓主要矛盾',
+    skill: 'omd-contradictions',
+    build: (t) => `请加载 omd-contradictions skill，把以下局面拆成 A↔B 张力对、用证据认领唯一主线、定主要方面、写转化信号，并用 HUD 输出矛盾排序表：${t}`,
+  },
+  {
+    name: 'omd-challenge',
+    description: '红队质疑：采纳前主动攻击方案，找反例、失败条件与被忽略的代价',
+    hint: '<要质疑的方案或判断>',
+    label: '红队质疑',
+    skill: 'omd-challenge',
+    build: (t) => `请加载 omd-challenge skill，先 steelman 复述以下方案的最强版本，再攻击前提/反例/代价/失败模式/边界五个面，每条质疑写成可验证句式并分级，最后给出裁决：${t}`,
+  },
+  {
+    name: 'omd-postmortem',
+    description: '事后复盘：时间线还原 + 分层根因 + 防线审计，产出可执行护栏',
+    hint: '<搞砸或空转的事>',
+    label: '事后复盘',
+    skill: 'omd-postmortem',
+    build: (t) => `请加载 omd-postmortem skill，对以下事件做事后复盘（还原时间线→根因分直接/系统/假设三层→审计为什么防线没拦住→产出可执行护栏），并用 HUD 输出复盘结论：${t}`,
+  },
+  {
+    name: 'omd-decision-record',
+    description: '决策记录：固化决定的候选/依据/代价与推翻条件，防决策变教条',
+    hint: '<要记录的决定>',
+    label: '决策记录',
+    skill: 'omd-decision-record',
+    build: (t) => `请加载 omd-decision-record skill，为以下决定写一条轻量 ADR（背景/约束/候选对比/依据/代价/推翻条件），并用 HUD 输出决策要点：${t}`,
+  },
+  {
+    name: 'omd-observe',
+    description: '运行时观测：用证据回答"实际在跑什么"——进程/端口/日志/配置生效值',
+    hint: '<要查的运行时现象>',
+    label: '运行时观测',
+    skill: 'omd-observe',
+    build: (t) => `请加载 omd-observe skill，用证据回答以下问题（进程真实参数优先于配置/文档、区分磁盘配置与生效配置、先找活跃日志、注意元数据复制延迟），并用 HUD 输出证据表：${t}`,
   },
 ]
 
